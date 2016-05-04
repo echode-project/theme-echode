@@ -1,0 +1,104 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+/*------------------------------------*\
+$TABLE OF CONTENTS 
+\*------------------------------------*/
+/**
+ * VARIABLES..............................Declarations of Sass variables 
+ * .....Colors
+ * .....Typography
+ * .....Layout
+ * .....Defaults
+ * .....Breakpoints
+ * MIXINS.................................Sass mixins 
+ * RESET..................................Set reset defaults
+ * GLOBAL CLASSES.........................Set reset defaults
+ * GLOBAL ELEMENTS........................Establish global styles
+ * .....Base
+ * .....Headings
+ * .....Text-related elements (p, blockquote, lists)
+ * .....Defaults
+ * .....Breakpoints
+ * TYPOGRAPHY------------------------------
+ * MEDIA------------------------------
+ * LAYOUT------------------------------
+ * NAVIGATION------------------------------
+ * TOC To Be Continued
+ */
+
+// Compass and Susy imports
+@import "compass";
+@import "compass/reset";
+@import "susy";
+
+// Configuring Susy Defaults
+$susy: (
+  columns: 12,
+  gutters: 0.5,
+  global-box-sizing: border-box
+);
+
+// Global box sizing for Susy
+@include global-box-sizing(border-box);
+
+@import "scss/generic/variables";
+@import "scss/generic/mixins";
+
+
+/*------------------------------------*\
+  $GLOBAL ELEMENTS
+\*------------------------------------*/
+@import "scss/base/global-classes";
+@import "scss/base/base";
+@import "scss/base/links";
+@import "scss/base/headings";
+@import "scss/base/text";
+@import "scss/base/lists";
+@import "scss/base/logo";
+@import "scss/base/media";
+@import "scss/base/pages";
+@import "scss/base/forms";
+@import "scss/base/tables";
+@import "scss/base/animation";
+@import "scss/base/preloader";
+
+
+/*------------------------------------*\
+  $LAYOUT
+\*------------------------------------*/
+@import "scss/objects/layout";
+
+
+/*------------------------------------*\
+  $PAGE STRUCTURE
+\*------------------------------------*/
+@import "scss/objects/header";
+@import "scss/objects/nav";
+@import "scss/objects/main";
+@import "scss/objects/footer";
+
+
+/*------------------------------------*\
+  $TEXT Styles
+\*------------------------------------*/
+@import "scss/objects/text";
+
+
+/*------------------------------------*\
+  $COMPONENTS
+\*------------------------------------*/
+@import "scss/objects/icons";
+@import "scss/objects/buttons";
+@import "scss/objects/blocks";
+@import "scss/objects/dropdowns";
+@import "scss/objects/lists";
+@import "scss/objects/tooltip";
+@import "scss/objects/accordion";
+@import "scss/objects/tabs";
+@import "scss/objects/article";
+@import "scss/objects/comments";
+@import "scss/objects/messaging";
+@import "scss/objects/modal";

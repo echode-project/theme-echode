@@ -1,0 +1,316 @@
+/*------------------------------------*\
+  $FORMS
+\*------------------------------------*/
+//Quick hacky fix to remove add/remove element buttons on profile edit page
+.remove-element,
+.add-element,
+.use-html {
+  display: none !important;
+}
+
+//Same for "remember me" label. Gone, for now
+#remember-label,
+#remember {
+  display: none;
+}
+
+//Overrides some weird Omeka imposed style-trying to resolve
+div#contribution-type-form div.inputs {
+  width: 100%;
+}
+
+form {
+  text-align: left;
+  ol,
+  ul {
+    list-style: none;
+    margin-left: 0;
+  }
+
+  .explanation,
+  .hint {
+    color: $gray;
+    margin-bottom: $pad-quarter;
+  }
+  
+  .explanation {
+    margin-top: -$pad-quarter;
+  }
+  
+  .helper {
+    display: inline-block;
+    margin: 0 0 0 $pad;
+    vertical-align: middle;
+  }
+} // form
+
+fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  // Chrome and Firefox set a `min-width: min-content;` on fieldsets,
+  // so we reset that to ensure it behaves more like a standard block element.
+  // See https://github.com/twbs/bootstrap/issues/12359.
+  min-width: 0;
+}
+
+label {
+  cursor: pointer;
+  display: block;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-base;
+  margin-bottom: $pad-quarter;
+  max-width: 100%; // Force IE8 to wrap long content
+}
+
+// Position radios and checkboxes better
+input[type="radio"],
+input[type="checkbox"] {
+  margin: 6px 0 0;
+  margin-top: 1px \9; // IE8-9
+  line-height: normal;
+}
+
+// Set the height of file controls to match text inputs
+input[type="file"] {
+  display: block;
+}
+
+// Make range inputs behave like textual form controls
+input[type="range"] {
+  display: block;
+  width: 100%;
+}
+
+// Make multiple select elements height not fixed
+select[multiple],
+select[size] {
+  height: auto;
+}
+
+textarea {
+  min-height: $line-height-computed * 4;
+  max-width: 100%;
+}
+
+// Common form controls
+//
+// Shared size and type resets for form controls. Apply `.form-control` to any
+// of the following form controls:
+//
+select,
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"]
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.form-control, {
+  @include single-box-shadow(0, 1px, 1px, rgba(0, 0, 0, 0.075), inset);
+  color: $gray;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid $global-border-color;
+  border-radius: $global-border-radius;
+  display: block;
+  font-size: $font-size-base;
+  height: 41px;
+  line-height: $line-height-base;
+  padding: $pad-half $pad;
+  width: 100%;
+  &:focus {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  }
+}
+
+button,
+input[type="submit"] {
+  -webkit-appearance: none; // Override Safari Mobile styles
+  -webkit-border-radius: 0; // Override Safari Mobile styles
+  @extend .btn;
+  @extend .btn-primary;
+}
+
+input[type="search"] {
+  -webkit-appearance: none;
+  box-sizing: border-box; // Override content-box in Normalize (* isn't specific enough)
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+// Checkboxes and radios
+input[type="checkbox"],
+input[type="radio"] {
+  float: left;
+}
+
+input[type="checkbox"] + label,
+input[type="radio"] + label {
+  display: block;
+  font-weight: $font-weight-regular;
+  margin: 0 0 0 20px;
+  min-height: $line-height-computed; // Ensure the input doesn't jump when there is no text
+  vertical-align: baseline;
+}
+
+//Form Field Container
+#contribution-type, // Spacing between select and button beneath
+.field, // This until I can identify and change where all of these are coming from
+.field-container {
+  margin-bottom: $space;
+}
+
+.inline-form {
+  fieldset,
+  .inline-container {
+    display: inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
+  }
+
+  input {
+    display: inline-block;
+    width: auto;
+    vertical-align: middle;
+  }
+  
+  button,
+  .btn {
+    display: inline-block;
+    width: auto;
+
+    &:hover,
+    &:focus {
+      background-color: darken($primary, 10%);
+    }
+  }
+}
+
+/* Validation */
+[ng\:cloak],
+[ng-cloak],
+[data-ng-cloak],
+[x-ng-cloak],
+.ng-cloak,
+.x-ng-cloak {
+  display: none !important; //For Angular form validation
+}
+
+.has-error {
+  border-color: $error;
+}
+
+.is-valid {
+  border-color: $valid;
+}
+
+.ng-dirty.ng-invalid {
+  border-color: $error;
+}
+
+// Errors
+ul.error {
+  margin: 0;
+  li {
+    border: none;
+    font-size: $font-size-base;
+    margin-bottom: $space;
+    padding: $pad-quarter 0 0;
+  }
+}
+
+/*------------------------------------*\
+    $SPECIFIC FORMS
+\*------------------------------------*/
+// Location form
+.input-block {
+  position: relative;
+}
+
+#search-form {
+  position: relative;
+
+  input {
+    line-height: 1;
+  }
+  .search-submit {
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    width: 45px;
+    visibility: hidden;
+    &:before {
+      color: $gray;
+      font-family: 'FontAwesome';
+      content: $fa-var-search;
+      visibility: visible;
+    }
+
+    &:hover,
+    &:focus {
+      background-color: transparent;
+    }
+  }
+
+}
+
+// Comment form
+.input-block {
+  position: relative;
+}
+
+#geolocation_find_location_by_address {
+  background-color: transparent;
+  border: none;
+  color: $gray;
+  position: absolute;
+  right: 1px;
+  top: 1px;
+  width: 45px;
+  visibility: hidden;
+  &:before {
+    font-family: 'FontAwesome';
+    content: $fa-var-search;
+    visibility: visible;
+  }
+
+  &:hover,
+  &:focus {
+    background-color: transparent;
+  }
+}
+
+#omeka-map-form {
+  border: 1px solid $global-border-color;
+  margin-bottom: $space;
+}
+
+#comment-form,
+#update-account .form-wrap form,
+.contribute form,
+.login form,
+.register form {
+  @extend .panel;
+}
+
+// Hide for now
+#contribution-type-form .explanation {
+  @include visually-hidden;
+}

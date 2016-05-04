@@ -1,0 +1,33 @@
+// Establish baseline grid for Compass vertical rhythm
+@include establish-baseline($font-size-base);
+
+* {
+  margin: 0;
+}
+
+html,
+body,
+.outer-wrap,
+.inner-wrap {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+body {
+  background-color: #fff;
+  color: $black;
+  font: 100%/1.5 $font;
+  font-weight: $font-weight-regular;
+}
+
+.content-wrapper {
+  flex: 1;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background: $gray-dark;
+  background-image: linear-gradient(to right, $gray-light, $gray-dark, $gray-light);
+}

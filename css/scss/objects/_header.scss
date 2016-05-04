@@ -1,0 +1,36 @@
+.masthead {
+  background-color: $gray-lightest;
+  border-bottom: 1px solid $global-border-color;
+  height: $nav-height;
+  width: 100%;
+
+  .logo-btn-wrap {
+    position: relative;
+    height: $nav-height;
+    width: 100%;
+    @include mappy-bp(medium) {
+      float: left;
+      margin-right: $pad;
+      width: 35px;
+    }
+  }
+
+  #search-container {
+    border-bottom: 1px solid $gray-light;
+    position: relative;
+    height: $nav-height;
+    padding: ($nav-padding-vertical + 2px) $pad $nav-padding-vertical;
+    @include mappy-bp(medium) {
+      border: none;
+      float: left;
+      width: 30%;
+    }
+  } //#search-container
+
+} //.header
+
+#home .masthead {
+  background-color: transparent;
+  border-bottom-color: transparent;
+  position: absolute;
+}

@@ -1,0 +1,31 @@
+/*------------------------------------*\
+    $FOOTER
+\*------------------------------------*/
+.footer {
+  background-color: $primary-darker;
+  color: $primary-dark;
+  text-align: center;
+  width: 100%;
+
+  a {
+    color: $primary-dark;
+  }
+}
+
+.nav-footer {
+  margin-bottom: 0;
+  padding: $pad 0;
+
+  li {
+    padding: $pad;
+    @include mappy-bp(small) {
+      display: inline-block;
+    }
+  }
+}
+
+.copyright {
+  @include mappy-bp(medium) {
+    float: right;
+  }
+}

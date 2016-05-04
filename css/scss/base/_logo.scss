@@ -1,0 +1,12 @@
+.logo {
+  @include background-size;
+  background: url(../images/logo.png) transparent no-repeat center center;
+  background-image: url(../images/logo.svg);
+  background-size: 100%;
+  display: block;
+  float: left;
+  width: 30px;
+  height: 100%;
+  overflow: hidden;
+  text-indent: -10000em;
+}

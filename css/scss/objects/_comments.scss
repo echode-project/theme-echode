@@ -1,0 +1,66 @@
+// Comments
+#comments-container {
+  
+}
+
+#comment-main-container {
+  
+}
+
+.comment {
+  @include rhythm-borders(1px, 1, $font-size-base, solid);
+  @include border-radius($global-border-radius, $global-border-radius);
+  border-color: $global-border-color;
+  margin-bottom: rhythm();
+  position: relative;
+
+  .comment-author {
+    .comment-author-name {
+      font-weight: $font-weight-medium;
+      margin-bottom: rhythm(1/2);
+      &:after {
+        content: "said:";
+        font-weight: $font-weight-regular;
+        margin-left: 5px;
+      }
+    }
+    .gravatar {
+      display: none;
+    }
+  }
+
+  .comment-body {
+    @include adjust-font-size-to(14px);
+  }
+
+  .comment-flag,
+  .comment-unflag,
+  .comment-reply {
+    @include adjust-font-size-to(14px);
+    cursor: pointer;
+  }
+
+  .comment-flag {
+    &:before {
+      color: $gray;
+      font-family: 'FontAwesome';
+      content: $fa-var-flag;
+      margin-right: 5px;
+    }
+  }
+
+  .comment-unflag {
+    &:before {
+      color: $gray;
+      font-family: 'FontAwesome';
+      content: $fa-var-flag-o;
+      margin-right: 5px;
+    }
+  }
+
+  .comment-reply {
+    @extend .btn;
+    @extend .btn-primary;
+  }
+
+}

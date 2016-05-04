@@ -1,0 +1,35 @@
+div#guest-user-register-info {
+  background: rgba(0,0,0,0.75);
+  color: #fff;
+  position:absolute;
+  right: 0;
+  top: 40px;
+  font-family:Arvo, serif !important;
+  font-size: 12px;
+  width: 250px;
+  display: none;
+  padding: 3px;
+}
+
+div.guest-user-widget {
+  border: 1px solid rgba(0,0,0,.3);
+  margin: 0 1.5em 1.5em 0;
+  width: 210px;
+  height: 200px;
+  overflow: auto;
+  float: left;
+  background-color: white;
+}
+
+div.guest-user-widget ul {
+  padding: 0 10px 0 30px;
+  margin: 0;
+}
+
+div.guest-user-widget-odd {
+  clear:right;
+}
+
+p.explanation {
+  margin-top: 0px;
+}

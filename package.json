@@ -1,0 +1,19 @@
+{
+  "name": "echode",
+  "description": "Coming soon",
+  "version": "0.1.0",
+  "author": {
+    "name": "Adam Prince",
+    "url": "http://echode.org/"
+  },
+  "repository": "echode-project/echode-app",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-compass": "^1.0.3",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-nodeunit": "~0.4.1",
+    "grunt-contrib-uglify": "^0.9.1",
+    "grunt-install-compass": "0.0.2"
+  }
+}

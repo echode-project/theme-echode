@@ -1,0 +1,28 @@
+//Article
+.single {
+  .single__image {
+    margin-bottom: rhythm();
+    img {
+      margin: 0 auto;
+    }
+  }
+  .single_share {
+    margin-bottom: rhythm(2);
+  }
+  .single__text {
+    margin-bottom: rhythm();
+  }
+  .single__post {
+    border-top: 1px solid $global-border-color;
+  }
+  .single__comments {
+    margin-bottom: rhythm();
+    padding-top: rhythm(2);
+  }
+  .single__meta {
+    margin-bottom: rhythm();
+    padding-top: rhythm(2);
+  }
+}
+
+//Social Share
