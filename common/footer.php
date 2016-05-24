@@ -26,14 +26,14 @@
 
 <script type="text/javascript">
 jQuery(document).ready(function () {
-  Omeka.showAdvancedForm();
-  Omeka.skipNav();
-  Omeka.megaMenu();
+  jQuery(document).foundation();
+
+  jQuery(window).load(function() {
+    var options = {};
+    jQuery('[data-remodal-id=modal]').remodal(options).open();
+  });
 });
 </script>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>
-<script src="/themes/echode/javascripts/min/echode-min.js"></script>
 
 <script type="text/javascript">
 var _urq = _urq || [];
