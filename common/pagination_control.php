@@ -24,7 +24,7 @@ if ($this->pageCount > 1):
         list($key, $value) = explode('=', $entry);
         $hiddenParams[urldecode($key)] = urldecode($value);
         }
-      
+
         foreach($hiddenParams as $key => $value) {
           if($key != 'page') {
             echo $this->formHidden($key,$value);

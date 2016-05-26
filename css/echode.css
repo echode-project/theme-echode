@@ -1,33 +1,6 @@
-@charset "UTF-8";
-/* Welcome to Compass.
- * In this file you should write your main styles. (or centralize your imports)
- * Import this file using the following HTML or equivalent:
- * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
-/*------------------------------------*\
-$TABLE OF CONTENTS 
-\*------------------------------------*/
-/**
- * VARIABLES..............................Declarations of Sass variables 
- * .....Colors
- * .....Typography
- * .....Layout
- * .....Defaults
- * .....Breakpoints
- * MIXINS.................................Sass mixins 
- * RESET..................................Set reset defaults
- * GLOBAL CLASSES.........................Set reset defaults
- * GLOBAL ELEMENTS........................Establish global styles
- * .....Base
- * .....Headings
- * .....Text-related elements (p, blockquote, lists)
- * .....Defaults
- * .....Breakpoints
- * TYPOGRAPHY------------------------------
- * MEDIA------------------------------
- * LAYOUT------------------------------
- * NAVIGATION------------------------------
- * TOC To Be Continued
- */
+    text-align: center;
+}@charset "UTF-8";
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -2430,7 +2403,8 @@ video,
 object {
   display: block;
   height: auto;
-  max-width: 100%; }
+  width: 100%;
+  /*max-width: 100%;*/ }
 
 iframe {
   margin-bottom: 15px; }
@@ -2954,11 +2928,11 @@ meta.foundation-data-attribute-namespace {
   overflow: hidden;
   *zoom: 1; }
   .global-nav .navigation {
-    height: 72px;
+    /*height: 72px;*/
     margin-bottom: 0; }
     .global-nav .navigation li {
       border-top: 1px solid #d9d9d9;
-      height: 72px;
+      /*height: 72px;*/
       line-height: 72px;
       padding: 0 15px; }
       @media all and (min-width: 48em) {
@@ -3348,16 +3322,16 @@ input[type="submit"], .hero a.join-today, .comment .comment-reply {
 
 .btn-success {
   color: white;
-  background-color: #5cb85c; }
+  background-color: #00adef; }
   .btn-success:hover, .btn-success:focus, .btn-success.focus, .btn-success:active, .btn-success.active, .open > .btn-success.dropdown-toggle {
     color: white;
-    background-color: #449d44; }
+    background-color: #00adef; }
   .btn-success:active, .btn-success.active, .open > .btn-success.dropdown-toggle {
     background-image: none; }
   .btn-success.disabled, .btn-success.disabled:hover, .btn-success.disabled:focus, .btn-success.disabled.focus, .btn-success.disabled:active, .btn-success.disabled.active, .btn-success[disabled], .btn-success[disabled]:hover, .btn-success[disabled]:focus, .btn-success[disabled].focus, .btn-success[disabled]:active, .btn-success[disabled].active, fieldset[disabled] .btn-success, fieldset[disabled] .btn-success:hover, fieldset[disabled] .btn-success:focus, fieldset[disabled] .btn-success.focus, fieldset[disabled] .btn-success:active, fieldset[disabled] .btn-success.active {
-    background-color: #5cb85c; }
+    background-color: #00adef; }
   .btn-success .badge {
-    color: #5cb85c;
+    color: #505050;
     background-color: white; }
 
 .btn-warning {
@@ -3399,11 +3373,12 @@ input[type="submit"], .hero a.join-today, .comment .comment-reply {
 .items-grid {
   overflow: hidden;
   *zoom: 1;
-  padding: 0 0.76336%; }
+  padding-right: 0.76336%;
+  /* padding: 0 0.76336%; */ }
   .items-grid > .item {
     width: 49.61832%;
     float: left;
-    margin-bottom: 0.76336%; }
+    /* margin-bottom: 0.76336%; */ }
     .items-grid > .item:nth-child(2n + 1) {
       margin-left: 0;
       margin-right: -100%;
@@ -3415,7 +3390,8 @@ input[type="submit"], .hero a.join-today, .comment .comment-reply {
       clear: none; }
     @media all and (min-width: 48em) {
       .items-grid > .item {
-        width: 24.42748%;
+        width: 25.2%;
+        /* width: 24.42748%; */
         float: left; }
         .items-grid > .item:nth-child(4n + 1) {
           margin-left: 0;
@@ -4382,11 +4358,13 @@ html.remodal-is-locked {
 
 .remodal-confirm {
   color: #fff;
-  background: #81c784; }
+  /*background: #81c784;*/
+  background: #00adef; }
 
 .remodal-confirm:hover,
 .remodal-confirm:focus {
-  background: #66bb6a; }
+  /*background: #66bb6a;*/
+  background: #00adef; }
 
 .remodal-cancel {
   color: #fff;
@@ -4473,3 +4451,15 @@ html.remodal-is-locked {
 
 .lt-ie9 .remodal {
   width: 700px; }
+
+.ui-datepicker-title select {
+  display: inline;
+}
+
+.success {
+  color: #2b2e38;
+}
+
+ul.pagination {
+  margin-top: 10px;
+}

@@ -14,20 +14,19 @@ echo head(array('title'=>$pageTitle,'bodyclass' => 'items browse'));
 
   <div class="explore__lower">
     <div class="container">
-
-      <?php echo item_search_filters(); ?>
+      <?php //echo item_search_filters(); ?>
 
       <?php if ($total_results > 0): ?>
-
       <?php
-  //    $sortLinks[__('Title')] = 'Dublin Core,Title';
-  //    $sortLinks[__('Creator')] = 'Dublin Core,Creator';
-      $sortLinks[__('Date Added')] = 'added';
+        // $sortLinks[__('Title')] = 'Dublin Core,Title';
+        // $sortLinks[__('Creator')] = 'Dublin Core,Creator';
+        $sortLinks[__('Date Added')] = 'added';
       ?>
-      <div id="sort-links">
+        <div id="sort-links">
           <span class="sort-label"><?php echo __('Sort by: '); ?></span><?php echo browse_sort_links($sortLinks); ?>
-      </div>
-
+        </div>
+      <?php else: ?>
+        <div>No results found. Please broaden your search.</div>
       <?php endif; ?>
 
     </div>
