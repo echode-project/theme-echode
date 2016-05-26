@@ -85,8 +85,8 @@ return <<<HTML
       <input type="hidden" name="date_search_term" id="date_search_term" value="">
       <fieldset style="display:inline-block">
         <legend>Date Taken</legend>
-        <input type="text" id="datepicker-1" placeholder="From: YYYY-MM-DD" value="{$dateFrom}" style="display:inline;width:40%"></input>
-        <input type="text" id="datepicker-2" placeholder="To: YYYY-MM-DD" value="{$dateTo}" style="display:inline;width:40%;"></input>
+        <input type="text" id="datepicker-1" placeholder="From: YYYY-MM-DD" value="{$dateFrom}" style="display:inline;width:40%">
+        <input type="text" id="datepicker-2" placeholder="To: YYYY-MM-DD" value="{$dateTo}" style="display:inline;width:40%;">
       </fieldset>
       <fieldset style="display:inline-block;margin-left:-60px">
         <legend style="padding-bottom:5px;">Filter By</legend>
@@ -145,12 +145,12 @@ HTML;
     echo head_js();
   ?>
 
+  <script>
+    jQuery(window).load(function() {
+      jQuery(".preloader").fadeOut("slow");;
+    });
+  </script>
 </head>
-<script>
-  jQuery(window).load(function() {
-    jQuery(".preloader").fadeOut("slow");;
-  });
-</script>
 
 <?php echo body_tag(array('id' => @$bodyid, 'class' => @$bodyclass)); ?>
 
