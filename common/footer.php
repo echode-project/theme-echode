@@ -30,7 +30,11 @@ jQuery(document).ready(function () {
 
   jQuery(window).load(function() {
     var options = {};
-    jQuery('[data-remodal-id=modal]').remodal(options).open();
+    var $rmodal = jQuery('[data-remodal-id=modal]').remodal(options)
+
+    if ($rmodal != null) {
+      $rmodal.open();
+    }
   });
 });
 </script>

@@ -2208,7 +2208,7 @@ html,
 body,
 .outer-wrap,
 .inner-wrap {
-  display: flex;
+  /*display: flex;*/
   min-height: 100vh;
   flex-direction: column; }
 
@@ -2891,7 +2891,7 @@ meta.foundation-data-attribute-namespace {
   -moz-backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  overflow: hidden;
+  /*overflow: hidden;*/
   position: relative;
   width: 100%; }
   .outer-wrap.move-left {
