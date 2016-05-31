@@ -22,13 +22,14 @@ echo head(array('bodyid'=>'home'));
 <?php endif; ?>
 
 <section class="recent-items section">
+<!--
   <h1><?php echo __('Recently Added'); ?></h1>
   <p>Explore recent contributions from our community members.</p>
-
+-->
   <?php echo common('items-grid'); ?>
-
+<!--
   <a href="<?php echo html_escape(url('items')); ?>" class="view-more"><?php echo __('View More'); ?></a>
-
+-->
 </section>
 
 <?php fire_plugin_hook('public_append_to_home', array('view' => $this)); ?>

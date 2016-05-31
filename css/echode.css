@@ -2219,7 +2219,8 @@ body {
   font-weight: 400; }
 
 .content-wrapper {
-  flex: 1; }
+  flex: 1;
+  margin-top: 50px; }
 
 hr {
   border: 0;
@@ -2778,10 +2779,15 @@ if it's not present, don't show loader */
   $PAGE STRUCTURE
 \*------------------------------------*/
 .masthead {
-  background-color: #f7f7f7;
-  border-bottom: 1px solid #d9d9d9;
+  /*background-color: #f7f7f7;*/
+  background-color: #003144;
+  /*border-bottom: 1px solid #d9d9d9;*/
+  border-bottom: transparent;
   height: 72px;
-  width: 100%; }
+  width: 100%;
+  top: 0px;
+  position: fixed;
+  z-index: 1000; }
   .masthead .logo-btn-wrap {
     position: relative;
     height: 72px;
@@ -2803,19 +2809,33 @@ if it's not present, don't show loader */
         width: 30%; } }
 
 #home .masthead {
-  background-color: transparent;
+  /* background-color: transparent;*/
+  background-color: #003144;
   border-bottom-color: transparent;
-  position: absolute; }
+  top: 0px;
+  position: fixed;
+  z-index: 1000; }
 
 .masthead-link, .menu-btn, .exit-off-canvas, .global-nav a {
-  color: gray;
+  color: white;
   text-transform: uppercase;
   white-space: nowrap; }
   @media all and (max-width: 47.9375em) {
+    .global-nav, #home .masthead .global-nav {
+      background-color: #003143;
+    }
+    .global-nav, .masthead .global-nav {
+      background-color: #003143;
+    }
+  }
+  @media all and (max-width: 47.9375em) {
     .masthead-link, .menu-btn, .exit-off-canvas, .global-nav a {
-      display: block; } }
+      display: block;
+      color: white;
+    }
+  }
   .masthead-link:hover, .menu-btn:hover, .exit-off-canvas:hover, .global-nav a:hover, .masthead-link:focus, .menu-btn:focus, .exit-off-canvas:focus, .global-nav a:focus {
-    color: #222222; }
+    color: #007baa; }
 
 meta.foundation-version {
   font-family: "/5.5.1/"; }
@@ -3036,15 +3056,18 @@ meta.foundation-data-attribute-namespace {
   background-color: #003144;
   color: #007baa;
   text-align: center;
-  width: 100%; }
+  width: 100%;
+  bottom: 0px;
+  position: fixed;
+  z-index: 10000; }
   .footer a {
     color: #007baa; }
 
 .nav-footer {
   margin-bottom: 0;
-  padding: 15px 0; }
+  padding: 10px 0; }
   .nav-footer li {
-    padding: 15px; }
+    padding: 10px; }
     @media all and (min-width: 28.75em) {
       .nav-footer li {
         display: inline-block; } }
@@ -3656,7 +3679,9 @@ input[type="submit"], .hero a.join-today, .comment .comment-reply {
   text-align: center; }
 
 .explore {
-  text-align: center; }
+  text-align: center;
+  margin-top: 72px;
+  margin-bottom: 72px; }
   .explore #map-links {
     display: none; }
   .explore #geolocation-browse {
@@ -3678,7 +3703,8 @@ input[type="submit"], .hero a.join-today, .comment .comment-reply {
   margin-bottom: 1.5em; }
 
 .recent-items {
-  text-align: center; }
+  text-align: center;
+  padding-top: 0px;}
 
 .story {
   text-align: left; }
@@ -4462,4 +4488,104 @@ html.remodal-is-locked {
 
 ul.pagination {
   margin-top: 10px;
+}
+
+#browse_popup, #search_popup {
+  width: 100%;
+}
+
+#browse_popup_wrapper, #search_popup_wrapper, #browse_popup_background, #search_popup_background {
+  margin-top: 72px;
+}
+
+#browse_popup_wrapper, #browse_popup_background {
+  height: 12em;
+/* 5em */
+}
+@media all and (max-width: 47.9375em) {
+  #browse_popup_wrapper, #browse_popup_background {
+    height: 16em;
+/* 8em */
+  }
+}
+
+#search_popup_wrapper, #search_popup_background {
+  height: 12em;
+}
+@media all and (max-width: 47.9375em) {
+  #search_popup_wrapper, #search_popup_background {
+    height: 16em;
+  }
+}
+
+#search_popup {
+  padding: 0px 20px;
+}
+
+#browse_popup ul {
+  padding-top: 3.5em;
+  display:table;
+  margin:0 auto;
+}
+
+#search_popup ul {
+  padding-top: .8em;
+}
+
+#browse_popup ul li {
+  display: inline;
+  list-style-type: none;
+  padding-right: 50px;
+  float: left;
+}
+
+#browse_popup ul li a:link, #browse_popup ul li a:visited {
+  color: '#00adef';
+}
+
+#browse_popup ul li a:hover, #browse_popup ul li a:active {
+  color: '#00adef';
+}
+
+.search_popup_close {
+  margin-right: -14px;
+}
+
+.browse_popup_close {
+  margin-right: 6px;
+}
+
+.popup_close {
+  margin-top: 4px;
+  padding: 0px;
+  float:right;
+  height: 25px;
+  width: 25px;
+}
+
+.noUi-connect {
+  background: #003144;
+}
+
+.noUi-handle-upper div, .noUi-handle-lower div {
+  font-size: small;
+  width: 8em;
+  border: 0px;
+  background: transparent;
+}
+
+.noUi-handle-upper div {
+  right: 0px;
+  text-align: right;
+}
+
+.noUi-handle-lower div {
+  text-align: left;
+}
+
+#everything-button, #title-button, #subject-button
+{
+    border-width: 2px;
+    border-style: outset;
+    padding: 3px;
 }

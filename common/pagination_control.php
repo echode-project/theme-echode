@@ -3,7 +3,7 @@ if ($this->pageCount > 1):
     $getParams = $_GET;
 ?>
 <nav class="pagination-nav" aria-label="<?php echo __('Pagination'); ?>">
-  <ul class="pagination">
+  <ul class="pagination" style="display:none;">
     <?php if (isset($this->previous)): ?>
     <!-- Previous page link -->
     <li class="pagination_previous">

@@ -4,7 +4,7 @@ echo head(array('title'=>$pageTitle,'bodyclass' => 'items browse'));
 ?>
 
 <section class="explore">
-
+<!--
   <div class="explore__upper">
     <div class="container">
       <h1><?php echo $pageTitle; ?></h1>
@@ -31,11 +31,12 @@ echo head(array('title'=>$pageTitle,'bodyclass' => 'items browse'));
 
     </div>
   </div>
-
+-->
 <div class="items-grid">
 <?php foreach (loop('items') as $item): ?>
 
-<a href="<?php echo html_escape(public_url('items/show/'.metadata('item', 'id'))); ?>" class="item">
+<a href="<?php echo html_escape(public_url('items/show/'.metadata('item', 'id'))); ?>" class="item"
+  id="item-<?php echo metadata('item', 'id'); ?>">
 
   <div class="photo-wrap">
     <div class="photo-placeholder">

@@ -57,7 +57,6 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ur
 
   ga('create', 'UA-74078447-1', 'auto');
   ga('send', 'pageview');
-
 </script>
 
 </body>

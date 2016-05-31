@@ -6,7 +6,7 @@ if (has_loop_records('items')):
 <div class="items-grid">
 <?php foreach (loop('items') as $item): ?>
 
-<a href="<?php echo html_escape(public_url('items/show/'.metadata('item', 'id'))); ?>" class="item">
+<a href="<?php echo html_escape(public_url('items/show/'.metadata('item', 'id'))); ?>" id="item-<?php echo metadata('item', 'id'); ?>" class="item">
 
   <div class="photo-wrap">
     <div class="photo-placeholder">
