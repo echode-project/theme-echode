@@ -1,32 +1,11 @@
 jQuery(document).ready(function() {
   /* Popups for browse and search */
-  jQuery('#browse_popup').popup({color: 'white', opacity: .85, vertical: 'top', blur: false});
   jQuery('#search_popup').popup({color: 'white', opacity: .85, vertical: 'top', blur: false});
-
-  jQuery("#everything-button").click(function () {
-    jQuery(this).css("border-style", "inset")
-    jQuery("#title-button").css("border-style", "outset;");
-    jQuery("#subject-button").css("border-style", "outset;");
-    jQuery("#search-field-value").val("everything");
-  });
-  jQuery("#title-button").click(function () {
-    jQuery(this).css("border-style", "inset")
-    jQuery("#everything-button").css("border-style", "outset;");
-    jQuery("#subject-button").css("border-style", "outset;");
-    jQuery("#search-field-value").val("title");
-  });
-  jQuery("#subject-button").click(function () {
-    jQuery(this).css("border-style", "inset")
-    jQuery("#everything-button").css("border-style", "outset;");
-    jQuery("#title-button").css("border-style", "outset;");
-    jQuery("#search-field-value").val("subject");
-  });
 
   /* Construct valid date range for advanced search */
   jQuery('#advanced-search-form').on('submit', function(e) {
     var pictureCheckbox = jQuery(this).find("#picture-checkbox");
     var storyCheckbox = jQuery(this).find("#story-checkbox");
-    var mapSearch = jQuery(this).find("#map-search");
 
     /* If both selected, remove both for a 'search everything' request */
     if (storyCheckbox.is(':checked') && pictureCheckbox.is(':checked')) {
@@ -34,10 +13,21 @@ jQuery(document).ready(function() {
       pictureCheckbox.prop('checked', false);
     }
 
+    var viewValue = jQuery(this).find("#view-results").val();
+
     /* If we want to plot results on map, change form's action */
-    if (mapSearch.is(':checked')) {
+    if (viewValue == 'locations') {
       jQuery(this).attr("action", "/items/map");
-      mapSearch.prop('checked', false);
+    }
+
+    var subject = jQuery(this).find("#subject-value");
+
+    /* Form won't submit with empty subject w/o removing hidden fields */
+    if (subject.val() == '') {
+      var subjectQuery = jQuery(this).find("#subject-query");
+      var subjectField = jQuery(this).find("#subject-field");
+      jQuery(subjectQuery).remove();
+      jQuery(subjectField).remove();
     }
 
     var dateValues = document.getElementById('dateSlider').noUiSlider.get();
@@ -53,19 +43,12 @@ jQuery(document).ready(function() {
       fromDate = "1877";
       document.getElementById("date_search_term").value = fromDate + "-" + toDate;
     }
-<!--
-    var searchFieldValue = jQuery(this).find("#search-field-value");
-    if (searchFieldValue == 'title' || searchFieldValue == 'subject') {
-      var searchBox = jQuery(this).find("#search-box");
-      jQuery(this).find("#advanced_search").val(searchBox.val())
-      searchBox.val("");
+
+    /* Reset the state of our infinite scroll */
+    if (typeof(Storage) !== 'undefined') {
+      localStorage.scrollPage = 1;
+      localStorage.lastItem = 0;
     }
-    if (searchFieldValue == 'title') {
-      jQuery(this).find("#advanced_search_type").val('50');
-    } else if (searchFieldValue == 'subject') {
-      jQuery(this).find("#advanced_search_type").val('49');
-    }
--->
   });
 
   /* Enter submits for advanced search */

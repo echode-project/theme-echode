@@ -4,34 +4,14 @@ echo head(array('title'=>$pageTitle,'bodyclass' => 'items browse'));
 ?>
 
 <section class="explore">
-<!--
-  <div class="explore__upper">
-    <div class="container">
-      <h1><?php echo $pageTitle; ?></h1>
-      <?php echo common('nav-secondary'); ?>
-    </div>
-  </div>
-
+  <?php if ($total_results == 0): ?>
   <div class="explore__lower">
     <div class="container">
-      <?php //echo item_search_filters(); ?>
-
-      <?php if ($total_results > 0): ?>
-      <?php
-        // $sortLinks[__('Title')] = 'Dublin Core,Title';
-        // $sortLinks[__('Creator')] = 'Dublin Core,Creator';
-        $sortLinks[__('Date Added')] = 'added';
-      ?>
-        <div id="sort-links">
-          <span class="sort-label"><?php echo __('Sort by: '); ?></span><?php echo browse_sort_links($sortLinks); ?>
-        </div>
-      <?php else: ?>
         <div>No results found. Please broaden your search.</div>
-      <?php endif; ?>
-
     </div>
   </div>
--->
+  <?php endif; ?>
+
 <div class="items-grid">
 <?php foreach (loop('items') as $item): ?>
 

@@ -59,36 +59,72 @@
 
 <div class="preloader"></div>
 
-<div id="browse_popup">
-  <?php $tags = get_recent_tags(50); ?>
-  <button class="popup_close browse_popup_close"><i class="fa fa-times"></i></button>
-  <ul>
-    <li><a href="/items/browse">Browse All Items</a></li>
-    <li>Browse By Tag
-      <form method="get" action="/items/browse" style="float:right;padding-left:10px">
-        <select name="tags" style="height:1.5em;" onchange="this.form.submit()">
-        <option></option>
-        <?php foreach ($tags as $tagValue): ?>
-          <option><?php echo $tagValue; ?></option>
-        <?php endforeach; ?>
-        </select>
-      </form>
-    </li>
-    <li><a href="/items/map">Browse By Location</a></li>
-  </ul>
-</div>
-
 <div id="search_popup">
   <button class="popup_close search_popup_close"><i class="fa fa-times"></i></button>
   <ul>
     <form method="get" name="advanced-search-form" id="advanced-search-form" action="/items/browse">
-      <input type="hidden" name="search_type" value="advanced">
-      <input type="hidden" name="advanced[0][element_id]" id="advanced_search_type" value="">
-      <input type="hidden" name="advanced[0][type]" value="contains">
-      <input type="hidden" name="advanced[0][terms]" id="advanced_search" value="">
+      <input type="hidden" name="advanced[0][type]" id="subject-query" value="is exactly">
+      <input type="hidden" name="advanced[0][element_id]" value="49" id="subject-field">
       <input type="hidden" name="date_search_term" id="date_search_term" value="">
-      <li style="display:inline-block;float:left;padding-top:5px;padding-right:30px;">
-        <label style="display:inline;font-weight:normal !important;">
+      <input type="hidden" name="sort_field" value="added">
+      <li style="display:inline-block;position:relative;float:left">
+        <input type="text" name="search" style="2.5em;" id="search-box" value="<?php if (isset($_GET['search'])) { echo $_GET['search']; } ?>" title="Search" size="40">
+        <span onclick="jQuery(this).closest('form').submit();" style="right:5px;position:absolute;top:9px">
+          <i class="fa fa-search" style="z-index:1;color:#7B7B7B;width:0;margin-left:-25px"></i>
+        </span>
+      </li>
+      <li style="padding-right:30px;">
+        <label for="advanced[0][terms]" style="display:inline;float:left;padding-right:10px;padding-left:30px;font-weight:normal;padding-top:.5em;">Subject:</label>
+        <select name="advanced[0][terms]" id="subject-value" style="height:1.5em;width:12em;float:left;height:2.5em;">
+          <option selected="selected" value=""></option>
+          <?php // this could be done much better as array but scope creep is making this tech debt ?>
+          <option <?php if (isset($_GET['advanced']['0']['terms']) && $_GET['advanced']['0']['terms'] == 'Education') { echo " selected='selected' "; } ?>
+            value="Education">Education</option>
+          <option <?php if (isset($_GET['advanced']['0']['terms']) && $_GET['advanced']['0']['terms'] == 'Religion') { echo " selected='selected' "; } ?>
+            value="Religion">Religion</option>
+          <option <?php if (isset($_GET['advanced']['0']['terms']) && $_GET['advanced']['0']['terms'] == 'Race') { echo " selected='selected' "; } ?>
+            value="Race">Race</option>
+          <option <?php if (isset($_GET['advanced']['0']['terms']) && $_GET['advanced']['0']['terms'] == 'Agriculture') { echo " selected='selected' "; } ?>
+            value="Agriculture">Agriculture</option>
+          <option <?php if (isset($_GET['advanced']['0']['terms']) && $_GET['advanced']['0']['terms'] == 'Legal affairs') { echo " selected='selected' "; } ?>
+            value="Legal affairs">Legal affairs</option>
+          <option <?php if (isset($_GET['advanced']['0']['terms']) && $_GET['advanced']['0']['terms'] == 'Industry') { echo " selected='selected' "; } ?>
+            value="Industry">Industry</option>
+          <option <?php if (isset($_GET['advanced']['0']['terms']) && $_GET['advanced']['0']['terms'] == 'Civic life') { echo " selected='selected' "; } ?>
+            value="Civic life">Civic life</option>
+          <option <?php if (isset($_GET['advanced']['0']['terms']) && $_GET['advanced']['0']['terms'] == 'Military') { echo " selected='selected' "; } ?>
+            value="Military">Military</option>
+          <option <?php if (isset($_GET['advanced']['0']['terms']) && $_GET['advanced']['0']['terms'] == 'Healthcare') { echo " selected='selected' "; } ?>
+            value="Healthcare">Healthcare</option>
+          <option <?php if (isset($_GET['advanced']['0']['terms']) && $_GET['advanced']['0']['terms'] == 'Politics') { echo " selected='selected' "; } ?>
+            value="Politics">Politics</option>
+          <option <?php if (isset($_GET['advanced']['0']['terms']) && $_GET['advanced']['0']['terms'] == 'Athletics') { echo " selected='selected' "; } ?>
+            value="Athletics">Athletics</option>
+          <option <?php if (isset($_GET['advanced']['0']['terms']) && $_GET['advanced']['0']['terms'] == 'Recreation') { echo " selected='selected' "; } ?>
+            value="Recreation">Recreation</option>
+          <option <?php if (isset($_GET['advanced']['0']['terms']) && $_GET['advanced']['0']['terms'] == 'Towns and districts') { echo " selected='selected' "; } ?>
+            value="Towns and districts">Towns and districts</option>
+          <option <?php if (isset($_GET['advanced']['0']['terms']) && $_GET['advanced']['0']['terms'] == 'Family records') { echo " selected='selected' "; } ?>
+            value="Family records">Family records</option>
+          <option <?php if (isset($_GET['advanced']['0']['terms']) && $_GET['advanced']['0']['terms'] == 'Food and drink') { echo " selected='selected' "; } ?>
+            value="Food and drink">Food and drink</option>
+          <option <?php if (isset($_GET['advanced']['0']['terms']) && $_GET['advanced']['0']['terms'] == 'Crime') { echo " selected='selected' "; } ?>
+            value="Crime">Crime</option>
+        </select>
+      </li>
+      <li style="padding-right:30px;">
+        <?php $tags = get_recent_tags(50); ?>
+        <label for="tags" style="display:inline;float:left;padding-right:10px;padding-left:30px;font-weight:normal;padding-top:.5em;">Tag:</label>
+        <select name="tags" style="height:1.5em;width:13em;float:left;height:2.5em;">
+          <option selected="selected"></option>
+        <?php foreach ($tags as $tagValue): ?>
+          <option <?php if (isset($_GET['tags']) && $_GET['tags'] == $tagValue) { echo " selected='selected' "; } ?>
+            value="<?php echo $tagValue; ?>"><?php echo $tagValue; ?></option>
+        <?php endforeach; ?>
+        </select>
+      </li>
+      <li style="clear:both;padding-top:15px;padding-right:30px;">In:
+        <label style="display:inline;font-weight:normal !important;padding-left:10px;">
           <input type="checkbox" name="type" value="6" id="picture-checkbox" <?php
             if (!isset($_GET['type']) || $_GET['type'] == "6") {
               echo " checked='checked' ";
@@ -101,25 +137,8 @@
             }
           ?> style="float:none;margin-right:.5em;line-height:1.6">Stories</label>
       </li>
-      <li style="display:inline-block;float:left;padding-top:5px;padding-right:30px;">
-        <label style="display:inline;font-weight:normal !important;">
-          <input type="checkbox" name="map" value="yes" id="map-search" style="float:none;margin-right:.5em;line-height:1.6">View items on map</label>
-      </li>
-      <li style="display:inline-block;position:relative;float:left">
-        <input type="text" name="search" id="search-box" value="<?php if (isset($_GET['search'])) { echo $_GET['search']; } ?>" title="Search" size="40">
-        <span onclick="jQuery(this).closest('form').submit();" style="right:5px;position:absolute;top:9px">
-          <i class="fa fa-search" style="z-index:1;color:#7B7B7B;width:0;margin-left:-25px"></i>
-        </span>
-      </li>
-<!--
-      <li style="display:inline-block;float:left;padding-top:5px;padding-left:30px;">
-        <button type="button" id="everything-button">Everything</button>
-        <button type="button" id="title-button">Titles</button>
-        <button type="button" id="subject-button">Subjects</button>
-        <input type="hidden" id="search-field-value" value="everything" />
-      </li>
--->
-      <li style="clear:both;padding-top:50px;padding-left:15px;padding-right:15px;">
+      <li style="clear:both;padding-top:15px;padding-left:15px;padding-right:15px;padding-bottom:30px;">
+        <div style="padding-bottom:30px;margin-left:-15px;">Date Range:</div>
         <div id="dateSlider"></div>
         <script>
           var dateSlider = document.getElementById('dateSlider');
@@ -131,16 +150,20 @@
             var pair = vars[i].split("=");
 
             if (pair[0] == 'date_search_term') {
-              var dateVals = pair[1].split("-");
+              if (jQuery.isEmptyObject(pair[1])) {
+                dates = [ 1877, new Date().getFullYear() + 1];
+              } else {
+                var dateVals = pair[1].split("-");
 
-              try {
-                var fromDate = new Date(dateVals[0]).getFullYear() + 1;
-                var toDate = new Date(dateVals[1]).getFullYear() + 1;
+                try {
+                  var fromDate = new Date(dateVals[0]).getFullYear() + 1;
+                  var toDate = new Date(dateVals[1]).getFullYear() + 1;
 
-                dates[0] = fromDate;
-                dates[1] = toDate;
-              } catch(err) {
-                /* We'll used initialized default values */
+                  dates[0] = fromDate;
+                  dates[1] = toDate;
+                } catch(err) {
+                  /* We'll used initialized default values */
+                }
               }
             }
           }
@@ -161,6 +184,22 @@
           //-->
         </script>
       </li>
+      <li style="padding-right:30px;">
+        <label for="view" style="float:left;padding-right:10px;font-weight:normal;padding-top:.5em;">View as:</label>
+        <select name="view" id="view-results" style="height:1.5em;width:8em;float:left;height:2.5em;">
+          <option value="items">Items</option>
+          <option <?php if (isset($_SERVER["REQUEST_URI"]) && strpos($_SERVER["REQUEST_URI"], "/items/map") === 0) { echo " selected='selected' "; } ?>
+            value="locations">Locations</option>
+        </select>
+      </li>
+      <li style="padding-right:30px;">
+        <label for="sort" style="display:inline;float:left;padding-right:10px;padding-left:30px;font-weight:normal;padding-top:.5em;">Sort by:</label>
+        <select name="sort_dir" id="sort-results" style="height:1.5em;width:12em;float:left;height:2.5em;">
+          <option value="d">Newest to Oldest</option>
+          <option <?php if (isset($_GET['sort_dir']) && $_GET['sort_dir'] == 'a') { echo " selected='selected' ";  } ?>  value="a">Oldest to Newest</option>
+        </select>
+      </li>
+      <input type="submit" style="margin-left:30px;padding:5px;" value="Explore">
     </form>
   </ul>
 </div>
@@ -179,8 +218,7 @@
           <?php if($user = current_user()): ?>
 
           <ul class="navigation">
-            <li><a href="#" class="browse_popup_open">Browse</a></li>
-            <li><a href="#" class="search_popup_open">Search</a></li>
+            <li><a href="#" class="search_popup_open">Explore</a></li>
             <li><a href="/contribution">Contribute</a></li>
             <li class="go--right"><a href="/guest-user/user/me">My Profile</a></li>
             <li class="go--right"><a href="/users/logout">Sign Out</a></li>

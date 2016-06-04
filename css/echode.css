@@ -4490,69 +4490,34 @@ ul.pagination {
   margin-top: 10px;
 }
 
-#browse_popup, #search_popup {
+#search_popup {
   width: 100%;
 }
 
-#browse_popup_wrapper, #search_popup_wrapper, #browse_popup_background, #search_popup_background {
+#search_popup_wrapper, #search_popup_background {
   margin-top: 72px;
 }
 
-#browse_popup_wrapper, #browse_popup_background {
-  height: 12em;
-/* 5em */
-}
-@media all and (max-width: 47.9375em) {
-  #browse_popup_wrapper, #browse_popup_background {
-    height: 16em;
-/* 8em */
-  }
-}
-
 #search_popup_wrapper, #search_popup_background {
-  height: 12em;
+  height: 40%;
 }
+/*
 @media all and (max-width: 47.9375em) {
   #search_popup_wrapper, #search_popup_background {
-    height: 16em;
+    height: 40%;
   }
 }
-
+*/
 #search_popup {
   padding: 0px 20px;
-}
-
-#browse_popup ul {
-  padding-top: 3.5em;
-  display:table;
-  margin:0 auto;
 }
 
 #search_popup ul {
   padding-top: .8em;
 }
 
-#browse_popup ul li {
-  display: inline;
-  list-style-type: none;
-  padding-right: 50px;
-  float: left;
-}
-
-#browse_popup ul li a:link, #browse_popup ul li a:visited {
-  color: '#00adef';
-}
-
-#browse_popup ul li a:hover, #browse_popup ul li a:active {
-  color: '#00adef';
-}
-
 .search_popup_close {
   margin-right: -14px;
-}
-
-.browse_popup_close {
-  margin-right: 6px;
 }
 
 .popup_close {
