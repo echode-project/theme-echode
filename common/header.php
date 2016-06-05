@@ -227,8 +227,7 @@
           <?php else: ?>
 
           <ul class="navigation">
-            <li><a href="#" class="browse_popup_open">Browse</a></li>
-            <li><a href="#" class="search_popup_open">Search</a></li>
+            <li><a href="#" class="search_popup_open">Explore</a></li>
             <li><a href="/contribution">Contribute</a></li>
             <li class="go--right"><a href="/guest-user/user/register">Register</a></li>
             <li class="go--right"><a href="/users/login">Sign In</a></li>
