@@ -1,12 +1,9 @@
-<?php
-set_loop_records('items', get_recent_items( 24 ));
-if (has_loop_records('items')):
-?>
+<?php set_loop_records('items', $items); ?>
 
 <div class="items-grid">
 <?php foreach (loop('items') as $item): ?>
-
-<a href="<?php echo html_escape(public_url('items/show/'.metadata('item', 'id'))); ?>" id="item-<?php echo metadata('item', 'id'); ?>" class="item">
+  <a href="<?php echo html_escape(public_url('items/show/'.metadata('item', 'id'))); ?>" class="item"
+    id="item-<?php echo metadata('item', 'id'); ?>">
 
   <div class="photo-wrap">
     <div class="photo-placeholder">
@@ -46,9 +43,7 @@ if (has_loop_records('items')):
 </a>
 <?php endforeach; ?>
 
-<?php else: ?>
-
-<p><?php echo __('No recent items available.'); ?></p>
-
-<?php endif; ?>
 </div>
+
+<?php echo pagination_links(); ?>
+<?php echo foot(); ?>

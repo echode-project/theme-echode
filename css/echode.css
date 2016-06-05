@@ -2111,6 +2111,9 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     content: " ";
     display: block;
     clear: both; }
+.container--narrow {
+  margin-top: 20px;
+}
   @media all and (min-width: 48em) {
     .container.container--narrow {
       max-width: 600px; } }
@@ -2124,8 +2127,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     .container.form-wrap {
       max-width: 600px; } }
 
+/*
 .section {
-  padding: 3em 0 1.5em; }
+  padding: 3em 0 1.5em; 
+}
+*/
 
 /* Clearfix */
 .cf {
@@ -2387,7 +2393,7 @@ dd {
   background-size: 100% auto;
   background: url(../images/logo.png) transparent no-repeat center center;
   background-image: url(../images/logo.svg);
-  background-size: 100%;
+  background-size: 75%;
   display: block;
   float: left;
   width: 30px;
@@ -2403,9 +2409,14 @@ img,
 video,
 object {
   display: block;
-  height: auto;
-  width: 100%;
+  /*height: auto;*/
+  /* width: 100%; */
   /*max-width: 100%;*/ }
+
+.photo-placeholder img {
+  width: 100%;
+  height: auto;
+}
 
 iframe {
   margin-bottom: 15px; }
@@ -3065,7 +3076,8 @@ meta.foundation-data-attribute-namespace {
 
 .nav-footer {
   margin-bottom: 0;
-  padding: 10px 0; }
+  padding: 0px; /* 10px 0 */
+}
   .nav-footer li {
     padding: 10px; }
     @media all and (min-width: 28.75em) {
@@ -4125,8 +4137,9 @@ input[type="submit"], .hero a.join-today, .comment .comment-reply {
   display: block; }
 
 .single .single__image {
-  margin-bottom: 1.5em; }
-  .single .single__image img {
+  margin-bottom: 0px; /* ksc: was 1.5em */
+}
+.single .single__image img {
     margin: 0 auto; }
 .single .single_share {
   margin-bottom: 3em; }
@@ -4550,7 +4563,70 @@ ul.pagination {
 
 #everything-button, #title-button, #subject-button
 {
-    border-width: 2px;
-    border-style: outset;
-    padding: 3px;
+  border-width: 2px;
+  border-style: outset;
+  padding: 3px;
+}
+
+#map_browse {
+  height:100%;
+}
+
+.item_view {
+  padding-right: 0px;
+}
+
+.item_view_close {
+  margin-right: 2px;
+  margin-top: 2px;
+  height: 15px;
+  width: 15px;
+  line-height: 1em;
+  font-size: 12px;
+}
+
+#item_view article div.container {
+  padding: 1px 0px 15px 15px;
+}
+
+#item_view article {
+  height: 100%;
+}
+
+section, article.section {
+  padding-top: 40px;
+}
+
+section.recent-items, section.explore {
+  padding-top: 0px;
+}
+
+div#item_view article {
+  padding-top: 15px;
+}
+
+.metadata {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.metadata-label {
+  font-weight: bold;
+  padding-right: 5px;
+}
+
+.metadata-spacer {
+  padding-top: 20px;
+}
+
+.metadata-minispacer {
+  padding-top: 10px;
+}
+
+.item_view_floater {
+  float: right;
+  width: 150px;
+  padding: 5px;
+  padding-top: 10px;
+  margin-left: 25px;
 }

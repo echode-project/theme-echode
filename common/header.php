@@ -5,6 +5,24 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <link rel="apple-touch-icon" sizes="57x57" href="<?php echo img('apple-icon-57x57.png'); ?>">
+  <link rel="apple-touch-icon" sizes="60x60" href="<?php echo img('apple-icon-60x60.png'); ?>">
+  <link rel="apple-touch-icon" sizes="72x72" href="<?php echo img('apple-icon-72x72.png'); ?>">
+  <link rel="apple-touch-icon" sizes="76x76" href="<?php echo img('apple-icon-76x76.png'); ?>">
+  <link rel="apple-touch-icon" sizes="114x114" href="<?php echo img('apple-icon-114x114.png'); ?>">
+  <link rel="apple-touch-icon" sizes="120x120" href="<?php echo img('apple-icon-120x120.png'); ?>">
+  <link rel="apple-touch-icon" sizes="144x144" href="<?php echo img('apple-icon-144x144.png'); ?>">
+  <link rel="apple-touch-icon" sizes="152x152" href="<?php echo img('apple-icon-152x152.png'); ?>">
+  <link rel="apple-touch-icon" sizes="180x180" href="<?php echo img('apple-icon-180x180.png'); ?>">
+  <link rel="icon" type="image/png" sizes="192x192" href="<?php echo img('android-icon-192x192.png'); ?>">
+  <link rel="icon" type="image/png" sizes="32x32" href="<?php echo img('favicon-32x32.png'); ?>">
+  <link rel="icon" type="image/png" sizes="96x96" href="<?php echo img('favicon-96x96.png'); ?>">
+  <link rel="icon" type="image/png" sizes="16x16" href="<?php echo img('favicon-16x16.png'); ?>">
+  <link rel="manifest" href="<?php echo img('manifest.json'); ?>">
+  <meta name="msapplication-TileColor" content="#003144">
+  <meta name="msapplication-TileImage" content="<?php echo img('ms-icon-144x144.png'); ?>">
+  <meta name="theme-color" content="#003144">
+
   <?php if ( $description = option('description')): ?>
   <meta name="description" content="<?php echo $description; ?>">
   <?php endif; ?>
@@ -76,7 +94,7 @@
       <li style="padding-right:30px;">
         <label for="advanced[0][terms]" style="display:inline;float:left;padding-right:10px;padding-left:30px;font-weight:normal;padding-top:.5em;">Subject:</label>
         <select name="advanced[0][terms]" id="subject-value" style="height:1.5em;width:12em;float:left;height:2.5em;">
-          <option selected="selected" value=""></option>
+          <option selected="selected" value="">All</option>
           <?php // this could be done much better as array but scope creep is making this tech debt ?>
           <option <?php if (isset($_GET['advanced']['0']['terms']) && $_GET['advanced']['0']['terms'] == 'Education') { echo " selected='selected' "; } ?>
             value="Education">Education</option>
@@ -116,7 +134,7 @@
         <?php $tags = get_recent_tags(50); ?>
         <label for="tags" style="display:inline;float:left;padding-right:10px;padding-left:30px;font-weight:normal;padding-top:.5em;">Tag:</label>
         <select name="tags" style="height:1.5em;width:13em;float:left;height:2.5em;">
-          <option selected="selected"></option>
+          <option selected="selected" value="">All</option>
         <?php foreach ($tags as $tagValue): ?>
           <option <?php if (isset($_GET['tags']) && $_GET['tags'] == $tagValue) { echo " selected='selected' "; } ?>
             value="<?php echo $tagValue; ?>"><?php echo $tagValue; ?></option>
@@ -186,10 +204,10 @@
       </li>
       <li style="padding-right:30px;">
         <label for="view" style="float:left;padding-right:10px;font-weight:normal;padding-top:.5em;">View as:</label>
-        <select name="view" id="view-results" style="height:1.5em;width:8em;float:left;height:2.5em;">
-          <option value="items">Items</option>
+        <select name="view" id="view-results" style="height:1.5em;width:10em;float:left;height:2.5em;">
+          <option value="items">Thumbnails</option>
           <option <?php if (isset($_SERVER["REQUEST_URI"]) && strpos($_SERVER["REQUEST_URI"], "/items/map") === 0) { echo " selected='selected' "; } ?>
-            value="locations">Locations</option>
+            value="locations">Map</option>
         </select>
       </li>
       <li style="padding-right:30px;">
@@ -199,7 +217,12 @@
           <option <?php if (isset($_GET['sort_dir']) && $_GET['sort_dir'] == 'a') { echo " selected='selected' ";  } ?>  value="a">Oldest to Newest</option>
         </select>
       </li>
-      <input type="submit" style="margin-left:30px;padding:5px;" value="Explore">
+      <li style="display:inline-block;position:relative;float:left">
+        <input type="submit" style="margin-left:30px;padding:5px;padding-right:25px;" value="Explore">
+        <span onclick="jQuery(this).closest('form').submit();" style="right:5px;position:absolute;top:9px">
+          <i class="fa fa-search" style="z-index:1;color:#7B7B7B;width:0;margin-left:-16px"></i>
+        </span>
+      </li>
     </form>
   </ul>
 </div>
@@ -215,7 +238,7 @@
         <nav class="global-nav" role="navigation">
           <a href="#" class="exit-off-canvas">Close Menu</a>
 
-          <?php if($user = current_user()): ?>
+          <?php if ($user = current_user()): ?>
 
           <ul class="navigation">
             <li><a href="#" class="search_popup_open">Explore</a></li>
@@ -229,7 +252,6 @@
           <ul class="navigation">
             <li><a href="#" class="search_popup_open">Explore</a></li>
             <li><a href="/contribution">Contribute</a></li>
-            <li class="go--right"><a href="/guest-user/user/register">Register</a></li>
             <li class="go--right"><a href="/users/login">Sign In</a></li>
           </ul>
 
