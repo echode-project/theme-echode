@@ -2,6 +2,27 @@ jQuery(document).ready(function() {
   /* Popups for browse and search */
   jQuery('#search_popup').popup({color: 'white', opacity: .85, vertical: 'top', blur: false});
 
+  if (window.location.pathname == '/items/browse') {
+    if (localStorage.getItem("openExplore") !== null && localStorage.openExplore == 'true') {
+      jQuery('#search_popup').popup('show');
+      localStorage.openExplore = 'false';
+    }
+  }
+
+  /* Make geolocation map extend to height of page */
+  if (window.location.pathname == '/items/map') {
+    jQuery('#geolocation-browse').css('height', jQuery(window).height()-jQuery('header').height()*2+5);
+  }
+
+  if (window.location.pathname.substr(0, 11) === '/items/show') {
+    var itemImage = jQuery("div.item-file a img.full");
+    var height = jQuery(window).height() - jQuery('header').height()*2;
+
+    itemImage.css('width', 'auto');
+    itemImage.css('max-width', 'auto');
+    itemImage.css('max-height', height + 'px');
+  }
+
   /* Construct valid date range for advanced search */
   jQuery('#advanced-search-form').on('submit', function(e) {
     var pictureCheckbox = jQuery(this).find("#picture-checkbox");
@@ -26,6 +47,7 @@ jQuery(document).ready(function() {
     if (subject.val() == '') {
       var subjectQuery = jQuery(this).find("#subject-query");
       var subjectField = jQuery(this).find("#subject-field");
+
       jQuery(subjectQuery).remove();
       jQuery(subjectField).remove();
     }
@@ -47,7 +69,7 @@ jQuery(document).ready(function() {
     /* Reset the state of our infinite scroll */
     if (typeof(Storage) !== 'undefined') {
       localStorage.scrollPage = 1;
-      localStorage.lastItem = 0;
+      localStorage.removeItem("lastItem");
     }
   });
 
@@ -58,23 +80,46 @@ jQuery(document).ready(function() {
     }
   });
 
-  jQuery('ul.navigation li a').click(function() {
+  jQuery('div.logo-btn-wrap a').click(function() {
     /* Workaround for buggy two popup behavior */
-    jQuery('#browse_popup').popup('hide');
     jQuery('#search_popup').popup('hide');
 
     /* Reset the state of our infinite scroll */
     if (typeof(Storage) !== 'undefined') {
       localStorage.scrollPage = 1;
-      localStorage.lastItem = 0;
+      localStorage.removeItem("lastItem");
+    }
+  });
+
+  jQuery('ul.navigation li a').click(function() {
+    /* Workaround for buggy two popup behavior */
+    jQuery('#search_popup').popup('hide');
+
+    /* Reset the state of our infinite scroll */
+    if (typeof(Storage) !== 'undefined') {
+      localStorage.scrollPage = 1;
+      localStorage.removeItem("lastItem");
+    }
+
+    /* Redirect "Explore" nav clicks to /items/browse page */
+    if (window.location.pathname == '/contribution' || window.location.pathname == '/guest-user/user/me'
+        || window.location.pathname.substr(0, 11) === '/items/show') {
+      if (jQuery(this).attr('href') == '#') {
+        if (typeof(Storage) !== 'undefined') {
+          localStorage.openExplore = "true";
+        }
+
+        window.location.href = '/items/browse';
+      }
     }
   });
 
   /* Jump to page and item in infinite scroll */
   if (typeof(Storage) !== 'undefined') {
-    if (window.location.href.indexOf('/items/browse') != -1) {
+    if (window.location.href.indexOf('/items/browse') != -1 || window.location.href.lastIndexOf('/') == window.location.href.length - 1) {
       if (localStorage.scrollPage > 1) {
         jQuery('div.items-grid a').remove();
+        console.log("Getting page " + localStorage.scrollPage  + " through back button");
 
         jQuery.ajax({
           url: '/items/browse?page=' + localStorage.scrollPage,
@@ -99,50 +144,63 @@ jQuery(document).ready(function() {
             });
           });
 
+          var oldHeight = jQuery(document).height();
+          var oldScroll = jQuery(window).scrollTop();
+
           itemsGrid.append(links);
           itemsGrid.append(html.find('li.pagination_next'));
 
-          jQuery('li.pagination_next a').val('/items/browse?page=' + localStorage.scrollPage + 1);
+          jQuery(document).scrollTop(oldScroll + jQuery(document).height() - oldHeight);
 
           if (localStorage.getItem("lastItem") !== null) {
             var lastItem = jQuery("#" + localStorage.lastItem);
 
             if (lastItem.length === 0) {
               lastItem = jQuery("#" + localStorage.lastItem + "_" + localStorage.scrollPage);
+              jQuery("html, body").animate({ scrollTop: lastItem.offset().top - 72 });
+
+              console.log("Reset page position to " + localStorage.lastItem + " [top offset: " + (lastItem.offset().top - 72).toString() + "]");
+            } else {
+              console.log("Last item " + localStorage.lastItem  + "  not found on page (" + localStorage.scrollPage + ")");
             }
 
-            try {
-              jQuery("html, body").animate({ scrollTop: lastItem.offset().top - 72 });
-            } catch (e) {
-              // Page reload doesn't have last offset, and that's okay... started with next batch
-            }
+            localStorage.removeItem("lastItem");
+          } else {
+            console.log("Last item is null, can't scroll'");
           }
+
+            localStorage.ignoreScroll = "true";
         });
       }
 
     } else if (window.location.href.indexOf('/items/show') != -1) {
-      // Don't need to do anything here
+      localStorage.removeItem("ignoreScroll");
     } else {
       localStorage.scrollPage = 1;
-      localStorage.lastItem = 0;
+      localStorage.removeItem("lastItem");
+      localStorage.removeItem("ignoreScroll");
     }
   }
 
-  /* Inifinite scroll */
+  /* Infinite scroll */
   jQuery(window).scroll(function() {
     if (jQuery(window).scrollTop() + jQuery(window).height() == jQuery(document).height()) {
+      if (localStorage.getItem("ignoreScroll") !== null) {
+        localStorage.removeItem("ignoreScroll");
+      } else {
+
       if (location.pathname == '/') {
-        localStorage.scrollPage = 2;
-        localStorage.lastItem = jQuery('div.items-grid a:last').attr('id');
-        window.location = "/items/browse?page=2";
-      } else if (jQuery('li.pagination_next a').length) {
+        jQuery("<ul style='display:none;'><li class='pagination_next'><a href='/items/browse?page=2'></a></li></ul>").insertAfter(jQuery('div.items-grid'));
+      }
+
+      if (jQuery('li.pagination_next a').length) {
         var nextPage = jQuery('li.pagination_next a').attr('href');
         var itemsGrid  = jQuery('div.items-grid');
         var arr = nextPage.split("=");
         var pageNum = arr[arr.length - 1];
 
         if (pageNum > 1) {
-          //alert("Getting new page: " + pageNum);
+          console.log("Getting new page: " + pageNum);
           jQuery.get(nextPage, function(data, status) {
             var html = jQuery(jQuery.parseHTML(data));
             var links = html.find('div.items-grid a');
@@ -172,6 +230,7 @@ jQuery(document).ready(function() {
         if (typeof(Storage) !== 'undefined') {
           localStorage.scrollPage = pageNum;
         }
+      }
       }
     }
   });

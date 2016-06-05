@@ -2125,7 +2125,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
       max-width: 600px; } }
 
 .section {
-  padding: 3em 0 1.5em; }
+  padding: 1.5em 0 0em; /* ksc: first was 3em, last was 1.5em */
+}
 
 /* Clearfix */
 .cf {
@@ -2387,7 +2388,7 @@ dd {
   background-size: 100% auto;
   background: url(../images/logo.png) transparent no-repeat center center;
   background-image: url(../images/logo.svg);
-  background-size: 100%;
+  background-size: 75%;
   display: block;
   float: left;
   width: 30px;
@@ -4125,8 +4126,9 @@ input[type="submit"], .hero a.join-today, .comment .comment-reply {
   display: block; }
 
 .single .single__image {
-  margin-bottom: 1.5em; }
-  .single .single__image img {
+  margin-bottom: 0px; /* ksc: was 1.5em */
+}
+.single .single__image img {
     margin: 0 auto; }
 .single .single_share {
   margin-bottom: 3em; }
@@ -4550,7 +4552,11 @@ ul.pagination {
 
 #everything-button, #title-button, #subject-button
 {
-    border-width: 2px;
-    border-style: outset;
-    padding: 3px;
+  border-width: 2px;
+  border-style: outset;
+  padding: 3px;
+}
+
+#map_browse {
+  height:100%;
 }
