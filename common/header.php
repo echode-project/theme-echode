@@ -220,7 +220,7 @@
       <li style="display:inline-block;position:relative;float:left">
         <input type="submit" style="margin-left:30px;padding:5px;padding-right:25px;" value="Explore">
         <span onclick="jQuery(this).closest('form').submit();" style="right:5px;position:absolute;top:9px">
-          <i class="fa fa-search" style="z-index:1;color:#7B7B7B;width:0;margin-left:-16px"></i>
+          <i class="fa fa-search" style="z-index:1;color:white;width:0;margin-left:-16px"></i>
         </span>
       </li>
     </form>
@@ -241,7 +241,10 @@
           <?php if ($user = current_user()): ?>
 
           <ul class="navigation">
-            <li><a href="#" class="search_popup_open">Explore</a></li>
+            <li>
+              <a href="#" class="search_popup_open">Explore</a>
+              <i class="fa fa-search" style="z-index:1;color:white;width:0;margin-left:0px"></i>
+            </li>
             <li><a href="/contribution">Contribute</a></li>
             <li class="go--right"><a href="/guest-user/user/me">My Profile</a></li>
             <li class="go--right"><a href="/users/logout">Sign Out</a></li>
