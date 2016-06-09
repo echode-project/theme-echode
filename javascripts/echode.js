@@ -155,7 +155,11 @@ jQuery(document).ready(function() {
     var toDate = new Date(dateValues[1]).getFullYear() + 1;
 
     if (fromDate && toDate) {
-      document.getElementById("date_search_term").value = fromDate + "-" + toDate;
+      if (fromDate == '1877' && toDate == new Date().getFullYear()) {
+        document.getElementById("date_search_term").value = "";
+      } else {
+        document.getElementById("date_search_term").value = fromDate + "-" + toDate;
+      }
     } else if (fromDate) {
       toDate = new Date().getFullYear() + 1;
       document.getElementById("date_search_term").value = fromDate + "-" + toDate;
