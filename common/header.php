@@ -253,7 +253,10 @@
           <?php else: ?>
 
           <ul class="navigation">
-            <li><a href="#" class="search_popup_open">Explore</a></li>
+            <li>
+              <a href="#" class="search_popup_open">Explore</a>
+              <i class="fa fa-search" style="z-index:1;color:white;width:0;margin-left:0px"></i>
+            </li>
             <li><a href="/contribution">Contribute</a></li>
             <li class="go--right"><a href="/users/login">Sign In</a></li>
           </ul>
