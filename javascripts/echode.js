@@ -109,7 +109,7 @@ jQuery(document).ready(function() {
 
   /* Make geolocation map extend to height of page */
   if (window.location.pathname == '/items/map') {
-    jQuery('#geolocation-browse').css('height', jQuery(window).height()-jQuery('header').height()*2+5);
+    jQuery('#geolocation-browse').css('height', jQuery(window).height()-jQuery('header').height()*2 + 27);
   }
 
   if (window.location.pathname.substr(0, 11) === '/items/show') {
@@ -197,26 +197,28 @@ jQuery(document).ready(function() {
   /* Infinite scroll */
   jQuery(window).scroll(function() {
     if (jQuery(window).scrollTop() + jQuery(window).height() == jQuery(document).height()) {
-      if (jQuery('li.pagination_next a').length) {
-        var nextPage = jQuery('li.pagination_next a').attr('href');
-        var itemsGrid  = jQuery('div.items-grid');
-        var arr = nextPage.split("=");
-        var pageNum = arr[arr.length - 1];
+      if (window.location.pathname == '/' || window.location.pathname.substring(0, 13) == '/items/browse') {
+        if (jQuery('li.pagination_next a').length) {
+          var nextPage = jQuery('li.pagination_next a').attr('href');
+          var itemsGrid  = jQuery('div.items-grid');
+          var arr = nextPage.split("=");
+          var pageNum = arr[arr.length - 1];
 
-        if (pageNum > 1) {
-          console.log("Getting new page: #" + pageNum);
-          jQuery.get(nextPage, function(data, status) {
-            var html = jQuery(jQuery.parseHTML(data));
-            var links = html.find('div.items-grid a');
+          if (pageNum > 1) {
+            console.log("Getting new page: #" + pageNum);
+            jQuery.get(nextPage, function(data, status) {
+              var html = jQuery(jQuery.parseHTML(data));
+              var links = html.find('div.items-grid a');
 
-            jQuery('li.pagination_next').each(function(index, elem) {
-              jQuery(elem).remove();
+              jQuery('li.pagination_next').each(function(index, elem) {
+                jQuery(elem).remove();
+              });
+
+              links.each(ModLinks);
+              itemsGrid.append(links);
+              itemsGrid.append(html.find('li.pagination_next'));
             });
-
-            links.each(ModLinks);
-            itemsGrid.append(links);
-            itemsGrid.append(html.find('li.pagination_next'));
-          });
+          }
         }
       }
     }

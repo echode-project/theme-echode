@@ -3693,7 +3693,8 @@ input[type="submit"], .hero a.join-today, .comment .comment-reply {
 .explore {
   text-align: center;
   margin-top: 72px;
-  margin-bottom: 72px; }
+  /* map fix - margin-bottom: 72px;*/
+ }
   .explore #map-links {
     display: none; }
   .explore #geolocation-browse {
