@@ -2245,10 +2245,12 @@ a {
 a,
 button,
 input[type="submit"] {
-  -moz-transition: all 0.15s ease-in;
+/*  -moz-transition: all 0.15s ease-in;
   -o-transition: all 0.15s ease-in;
   -webkit-transition: all 0.15s ease-in;
-  transition: all 0.15s ease-in; }
+  transition: all 0.15s ease-in;
+ksc removed */
+}
 
 /* Headings */
 h1,
@@ -3522,6 +3524,15 @@ input[type="submit"], .hero a.join-today, .comment .comment-reply {
     .capabilities {
       padding-left: 210px; } }
 
+.albumslink {
+  margin-left: 100px; }
+  @media all and (min-width: 48em) {
+    .albumslink {
+      margin-left: 165px; } }
+  @media all and (min-width: 57.5em) {
+    .albumslink {
+      margin-left: 215px; } }
+
 .story-wrap {
   background-color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -4630,4 +4641,37 @@ div#item_view article {
   padding: 5px;
   padding-top: 10px;
   margin-left: 25px;
+}
+
+#primary, #poster-help, #album-view {
+  padding: 40px 40px 60px 40px;
+}
+
+.posters div.inner-wrap main.content-wrapper div#primary h1 {
+  margin-bottom: .3em;
+}
+
+#posters {
+  margin-top: 1em;
+}
+
+.album_add {
+  float: right;
+  padding: 5px;
+}
+
+.poster-field {
+  padding-bottom: 15px;
+}
+
+#album-view h1 {
+  margin: 0px;
+}
+
+.bx-wrapper .bx-next {
+  right: 15px;
+  /*background: url('/plugins/Posters/views/public/images/controls.png') no-repeat -43px 0px;*/
+}
+.bx-wrapper .bx-next {
+/*  background: url('/plugins/Posters/views/public/images/controls.png') no-repeat 0px 0px;*/
 }

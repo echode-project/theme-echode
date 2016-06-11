@@ -82,6 +82,15 @@
     <div class="single_share">
       <?php echo get_specific_plugin_hook_output('SocialBookmarking', 'public_items_show', array('view' => $this, 'item' => $item)); ?>
     </div>
+    <div class="album_add">
+      <?php if (!is_null(current_user())): ?>
+        <script>
+          jQuery.get('/albums/help?get-albums=true', function(data){
+            jQuery('.album_add').html(data);
+          });
+        </script>
+      <?php endif; ?>
+    </div>
   </div>
 
   <aside class="single__post">

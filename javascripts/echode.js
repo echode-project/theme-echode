@@ -96,6 +96,18 @@ jQuery(document).ready(function() {
     }
   }
 
+  // Fixing what isn't extensible through plugin theme override(?!)
+  if (window.location.pathname.substring(0, 22) == '/albums/delete-confirm') {
+    var wrapper = jQuery('.content-wrapper');
+    var h1 = wrapper.find('h1');
+    var primary = wrapper.find('#primary div');
+
+    wrapper.css('margin-top', '90px');
+    wrapper.css('margin-left', '40px');
+    h1.text('Delete Album');
+    primary.unwrap();
+  }
+
   if (window.location.pathname == '/' || window.location.pathname.substring(0, 13) == '/items/browse') {
     var itemsGrid = jQuery('div.items-grid');
 
