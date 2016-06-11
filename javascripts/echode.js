@@ -1,78 +1,117 @@
 jQuery(document).ready(function() {
-  /* Popups for browse and search */
   jQuery('#search_popup').popup({color: 'white', opacity: .85, vertical: 'top', blur: false});
 
   function openPopup(href, item) {
-      jQuery('#item_view').popup({color: 'white', opacity: .85, autoopen: true, blur: false, scrolllock: true,
-          detach: true, outline: true, beforeopen: function(){
-        jQuery.ajax({
-          url: href,
-          async: false
-        }).done(function(data) {
-          var html = jQuery(jQuery.parseHTML(data));
-          var article = html.find('article.section');
-          var nav = jQuery(article).find('nav');
+    jQuery('#item_view').popup({color: 'white', opacity: .85, autoopen: true, blur: false, scrolllock: true,
+        detach: true, outline: true, beforeopen: function() {
+      jQuery.ajax({
+        url: href,
+        async: false
+      }).done(function(data) {
+        var html = jQuery(jQuery.parseHTML(data));
+        var article = html.find('article.section');
+        var nav = jQuery(article).find('nav');
+        var previous = jQuery(nav).find('#previous-item a');
+        var next = jQuery(nav).find('#next-item a');
+        var nextHref, prevHref;
 
-          article.css('background-color', 'white');
-          article.css('opacity', '1');
+        /* Omeka has a different concept of next/previous than user */
+        if (previous.length > 0) {
+          nextHref = previous.attr('href');
+        }
 
-          jQuery(article).find('div.container:gt(0)').remove();
-          jQuery(article).find('a:not([class="keeper"])').contents().unwrap();
-          jQuery(article).find('a[class="keeper"]').attr('target', '_blank');
-          jQuery(article).find('aside').remove();
-          nav.remove();
+        if (next.length > 0) {
+          prevHref = next.attr('href');
+        }
 
-          item.append(article);
+        article.css('background-color', 'white');
+        article.css('opacity', '1');
+
+        jQuery(article).find('div.container:gt(0)').remove();
+        jQuery(article).find('a:not([class="keeper"])').contents().unwrap();
+        jQuery(article).find('a[class="keeper"]').attr('target', '_blank');
+        jQuery(article).find('aside').remove();
+
+        /* Tidy up what wasn't removed by 'div.container:gt(0)' above */
+        nav.remove();
+
+        item.append(article);
+
+        if (nextHref !== undefined && nextHref !== null) {
+          item.append('<a href="' + nextHref + '" class="nextprev"><i class="fa fa-arrow-circle-right fa-lg" id="search-nav-right" aria-hidden="true"></i></a>');
+        }
+
+        if (prevHref !== undefined && prevHref !== null) {
+          item.append('<a href="' + prevHref + '" class="nextprev"><i class="fa fa-arrow-circle-left fa-lg" id="search-nav-left" aria-hidden="true"></i></a>');
+        }
+
+        item.find('.nextprev').click(function(e) {
+          jQuery('#item_view').popup('hide');
+
+          var height = jQuery(window).height() * .8;
+          var width = jQuery(window).width() * .50;
+          var href = jQuery(this).attr('href');
+
+          /* Popup markup */
+          var item = jQuery("<div id='item_view' style='width:" + width  + "px;height:" + height + "px;'>" +
+            "<button class='popup_close item_view_close'><i class='fa fa-times'></i></button></div>");
+
+          /* Put our popup on the page so it can popup */
+          jQuery('.items-grid').append(item);
+
+          openPopup(href, item);
+          e.preventDefault();
         });
-      }, onopen: function(){
-        var view = jQuery('#item_view');
-        var image = jQuery(view).find('img');
-        var text = jQuery(view).find('.single__text');
+      });
+    }, onopen: function(){
+      var view = jQuery('#item_view');
+      var image = jQuery(view).find('img');
+      var text = jQuery(view).find('.single__text');
 
-        if (image.length) {
-          var maxHeight = parseInt(view.css('height')) * .75;
-          var maxWidth = parseInt(view.css('width')) - 20;
-          var ratio;
+      if (image.length) {
+        var maxHeight = parseInt(view.css('height')) * .75;
+        var maxWidth = parseInt(view.css('width')) - 20;
+        var ratio;
 
-          /* Scale image to fit in popup */
-          image.load(function() {
-            var imgHeight = image.height();
-            var imgWidth = image.width();
+        /* Scale image to fit in popup */
+        image.load(function() {
+          var imgHeight = image.height();
+          var imgWidth = image.width();
 
-            if (imgWidth > maxWidth){
-              ratio = maxWidth / imgWidth;
-              image.css("width", maxWidth);
-              image.css("height", imgHeight * ratio);
-            }
+          if (imgWidth > maxWidth){
+            ratio = maxWidth / imgWidth;
+            image.css("width", maxWidth);
+            image.css("height", imgHeight * ratio);
+          }
 
-            imgHeight = image.height();
-            imgWidth = image.width();
+          imgHeight = image.height();
+          imgWidth = image.width();
 
-            if (imgHeight > maxHeight){
-              ratio = maxHeight / imgHeight;
-              image.css("height", maxHeight);
-              image.css("width", imgWidth * ratio);
-            }
-          });
-        } else {
-          var paragraphs = text.text();
-          var trimmed = paragraphs.substr(0, 1000);
+          if (imgHeight > maxHeight){
+            ratio = maxHeight / imgHeight;
+            image.css("height", maxHeight);
+            image.css("width", imgWidth * ratio);
+          }
+        });
+      } else {
+        var paragraphs = text.text();
+        var trimmed = paragraphs.substr(0, 1000);
 
-          trimmed = trimmed.substr(0, Math.min(trimmed.length, trimmed.lastIndexOf(" ")));
-          text.text(trimmed + "...");
-        }
+        trimmed = trimmed.substr(0, Math.min(trimmed.length, trimmed.lastIndexOf(" ")));
+        text.text(trimmed + "...");
+      }
 
-        var itemID = view.find('#title-metadata span').attr('id').split('-')[1];
-        var floater = jQuery("<div class='item_view_floater'>" +
-          "<a target='_blank' href='/items/show/" + itemID + "'>" +
-          "Visit the full record</a> to see more details or leave comments.</div>");
+      var itemID = view.find('#title-metadata span').attr('id').split('-')[1];
+      var floater = jQuery("<div class='item_view_floater'>" +
+        "<a target='_blank' href='/items/show/" + itemID + "'>" +
+        "Visit the full record</a> to see more details or leave comments.</div>");
 
-        if (image.length > 0) {
-          floater.insertAfter(image);
-        } else {
-          floater.insertAfter(text);
-        }
-      }});
+      if (image.length > 0) {
+        floater.insertAfter(image);
+      } else {
+        floater.insertAfter(text);
+      }
+    }});
   }
 
   /* Create popup viewer for infinite scroller */

@@ -4598,7 +4598,7 @@ ul.pagination {
 }
 
 #item_view article div.container {
-  padding: 1px 0px 15px 15px;
+  margin: 10px 6px 10px 6px;
 }
 
 #item_view article {
@@ -4620,6 +4620,8 @@ div#item_view article {
 .metadata {
   padding-top: 0px;
   padding-bottom: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 .metadata-label {
@@ -4670,8 +4672,18 @@ div#item_view article {
 
 .bx-wrapper .bx-next {
   right: 15px;
-  /*background: url('/plugins/Posters/views/public/images/controls.png') no-repeat -43px 0px;*/
 }
-.bx-wrapper .bx-next {
-/*  background: url('/plugins/Posters/views/public/images/controls.png') no-repeat 0px 0px;*/
+
+#search-nav-right {
+  float: right;
+}
+
+#search-nav-left {
+  float: left;
+}
+
+#search-nav-left, #search-nav-right {
+  bottom: 0px;
+  margin-top: -25px;
+  padding: 5px;
 }

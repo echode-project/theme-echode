@@ -132,9 +132,7 @@
 
       </div>
       <div class="single__comments o-right-half">
-  
         <?php echo get_specific_plugin_hook_output('Commenting', 'public_items_show', array('view' => $this, 'item' => $item)); ?>
-  
       </div>
     </div>
   </aside>
