@@ -2,18 +2,7 @@ jQuery(document).ready(function() {
   /* Popups for browse and search */
   jQuery('#search_popup').popup({color: 'white', opacity: .85, vertical: 'top', blur: false});
 
-  /* Create popup viewer for infinite scroller */
-  var ModLinks = function() {
-    jQuery(this).click(function(e) {
-      var height = jQuery(window).height() * .8;
-      var width = jQuery(window).width() * .50;
-      var item = jQuery("<div id='item_view' style='width:" + width  + "px;height:" + height + "px;'>" +
-        "<button class='popup_close item_view_close'><i class='fa fa-times'></i></button></div>");
-      var href = jQuery(this).attr('href');
-
-      /* Put our popup on the page so it can popup */
-      jQuery('.items-grid').append(item);
-
+  function openPopup(href, item) {
       jQuery('#item_view').popup({color: 'white', opacity: .85, autoopen: true, blur: false, scrolllock: true,
           detach: true, outline: true, beforeopen: function(){
         jQuery.ajax({
@@ -59,7 +48,7 @@ jQuery(document).ready(function() {
             imgHeight = image.height();
             imgWidth = image.width();
 
-            if (height > maxHeight){
+            if (imgHeight > maxHeight){
               ratio = maxHeight / imgHeight;
               image.css("height", maxHeight);
               image.css("width", imgWidth * ratio);
@@ -84,7 +73,23 @@ jQuery(document).ready(function() {
           floater.insertAfter(text);
         }
       }});
+  }
 
+  /* Create popup viewer for infinite scroller */
+  var ModLinks = function() {
+    jQuery(this).click(function(e) {
+      var height = jQuery(window).height() * .8;
+      var width = jQuery(window).width() * .50;
+      var href = jQuery(this).attr('href');
+
+      /* Popup markup */
+      var item = jQuery("<div id='item_view' style='width:" + width  + "px;height:" + height + "px;'>" +
+        "<button class='popup_close item_view_close'><i class='fa fa-times'></i></button></div>");
+
+      /* Put our popup on the page so it can popup */
+      jQuery('.items-grid').append(item);
+
+      openPopup(href, item);
       e.preventDefault();
     });
   }
