@@ -9,7 +9,7 @@
     </div>
     <?php
       $title = metadata('item', array('Dublin Core', 'Title'));
-      $description = metadata('item', array('Dublin Core', 'Description'), array('snippet' => 150));
+      $description = metadata('item', array('Dublin Core', 'Description'));
       $date = metadata('item', array('Dublin Core', 'Date'));
       $subjects = metadata('item', array('Dublin Core', 'Subject'), array('all' => true));
     ?>
@@ -19,7 +19,7 @@
       </div>
     <?php endif; ?>
     <?php if (isset($description)): ?>
-      <div class="metadata" id="description-metadata"><span class="metadata-label">Description:</span><?php echo $description; ?></div>
+      <div class="metadata" id="description-metadata"><span class="metadata-label">Description:</span><span class="dt"><?php echo $description; ?></span></div>
     <?php endif; ?>
     <?php if (isset($date)): ?>
       <div class="metadata" id="date-metadata"><span class="metadata-label">Date:</span><?php echo $date; ?></div>

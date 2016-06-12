@@ -143,13 +143,13 @@ Omeka.Poster = {};
                         tinymce.triggerSave();
                     })
                },
-               theme: "advanced",
+               theme: "simple", /*
                theme_advanced_toolbar_location: "top",
                theme_advanced_statusbar_locaion: "none",
                theme_advanced_toolbar_align: "left",
                theme_advanced_buttons1: "bold,italic,underline,|,justifyleft,justifycenter,justifyright,|,bullist,numlist,|,link,formatselect,code",
                theme_advanced_buttons2: "",
-               theme_advanced_buttons3: "",
+               theme_advanced_buttons3: "",*/
                plugins: "paste,media",
                media_strict: false,
                width: "100%"

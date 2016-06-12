@@ -85,15 +85,15 @@
       <input type="hidden" name="advanced[0][element_id]" value="49" id="subject-field">
       <input type="hidden" name="date_search_term" id="date_search_term" value="">
       <input type="hidden" name="sort_field" value="added">
-      <li style="display:inline-block;position:relative;float:left">
-        <input type="text" name="search" style="2.5em;" id="search-box" value="<?php if (isset($_GET['search'])) { echo $_GET['search']; } ?>" title="Search" size="40">
-        <span onclick="jQuery(this).closest('form').submit();" style="right:5px;position:absolute;top:9px">
-          <i class="fa fa-search" style="z-index:1;color:#7B7B7B;width:0;margin-left:-25px"></i>
+      <li id="as-text">
+        <input type="text" name="search" id="search-box" value="<?php if (isset($_GET['search'])) { echo $_GET['search']; } ?>" title="Search" size="40">
+        <span onclick="jQuery(this).closest('form').submit();">
+          <i class="fa fa-search"></i>
         </span>
       </li>
-      <li style="padding-right:30px;">
-        <label for="advanced[0][terms]" style="display:inline;float:left;padding-right:10px;padding-left:30px;font-weight:normal;padding-top:.5em;">Subject:</label>
-        <select name="advanced[0][terms]" id="subject-value" style="height:1.5em;width:12em;float:left;height:2.5em;">
+      <li id="as-subject">
+        <label for="advanced[0][terms]">Subject:</label>
+        <select name="advanced[0][terms]" id="subject-value">
           <option selected="selected" value="">All</option>
           <?php // this could be done much better as array but scope creep is making this tech debt ?>
           <option <?php if (isset($_GET['advanced']['0']['terms']) && $_GET['advanced']['0']['terms'] == 'Education') { echo " selected='selected' "; } ?>
@@ -130,10 +130,10 @@
             value="Crime">Crime</option>
         </select>
       </li>
-      <li style="padding-right:30px;">
+      <li id="as-tag">
         <?php $tags = get_recent_tags(50); ?>
-        <label for="tags" style="display:inline;float:left;padding-right:10px;padding-left:30px;font-weight:normal;padding-top:.5em;">Tag:</label>
-        <select name="tags" style="height:1.5em;width:13em;float:left;height:2.5em;">
+        <label for="tags">Tag:</label>
+        <select name="tags">
           <option selected="selected" value="">All</option>
         <?php foreach ($tags as $tagValue): ?>
           <option <?php if (isset($_GET['tags']) && $_GET['tags'] == $tagValue) { echo " selected='selected' "; } ?>
@@ -141,22 +141,22 @@
         <?php endforeach; ?>
         </select>
       </li>
-      <li style="clear:both;padding-top:15px;padding-right:30px;">In:
-        <label style="display:inline;font-weight:normal !important;padding-left:10px;">
+      <li id="as-format">In:
+        <label>
           <input type="checkbox" name="type" value="6" id="picture-checkbox" <?php
             if (!isset($_GET['type']) || $_GET['type'] == "6") {
               echo " checked='checked' ";
             }
-          ?> style="float:none;margin-right:.5em;line-height:1.6">Pictures</label>
-        <label style="display:inline;font-weight:normal !important;margin-left:.5em;">
+          ?>>Pictures</label>
+        <label id="label2">
           <input type="checkbox" name="type" value="1" id="story-checkbox" <?php
             if (!isset($_GET['type']) || $_GET['type'] == "1") {
               echo " checked='checked' ";
             }
-          ?> style="float:none;margin-right:.5em;line-height:1.6">Stories</label>
+          ?>>Stories</label>
       </li>
-      <li style="clear:both;padding-top:15px;padding-left:15px;padding-right:15px;padding-bottom:30px;">
-        <div style="padding-bottom:30px;margin-left:-15px;">Date Range:</div>
+      <li id="as-daterange">
+        <div id="as-daterange-label">Date Range:</div>
         <div id="dateSlider"></div>
         <script>
           var dateSlider = document.getElementById('dateSlider');
@@ -202,25 +202,25 @@
           //-->
         </script>
       </li>
-      <li style="padding-right:30px;">
-        <label for="view" style="float:left;padding-right:10px;font-weight:normal;padding-top:.5em;">View as:</label>
-        <select name="view" id="view-results" style="height:1.5em;width:10em;float:left;height:2.5em;">
+      <li id="as-view">
+        <label for="view">View as:</label>
+        <select name="view" id="view-results">
           <option value="items">Thumbnails</option>
           <option <?php if (isset($_SERVER["REQUEST_URI"]) && strpos($_SERVER["REQUEST_URI"], "/items/map") === 0) { echo " selected='selected' "; } ?>
             value="locations">Map</option>
         </select>
       </li>
-      <li style="padding-right:30px;">
-        <label for="sort" style="display:inline;float:left;padding-right:10px;padding-left:30px;font-weight:normal;padding-top:.5em;">Sort by:</label>
-        <select name="sort_dir" id="sort-results" style="height:1.5em;width:12em;float:left;height:2.5em;">
+      <li id="as-sort">
+        <label for="sort">Sort by:</label>
+        <select name="sort_dir" id="sort-results">
           <option value="d">Newest to Oldest</option>
           <option <?php if (isset($_GET['sort_dir']) && $_GET['sort_dir'] == 'a') { echo " selected='selected' ";  } ?>  value="a">Oldest to Newest</option>
         </select>
       </li>
-      <li style="display:inline-block;position:relative;float:left">
-        <input type="submit" style="margin-left:30px;padding:5px;padding-right:25px;" value="Explore">
-        <span onclick="jQuery(this).closest('form').submit();" style="right:5px;position:absolute;top:9px">
-          <i class="fa fa-search" style="z-index:1;color:white;width:0;margin-left:-16px"></i>
+      <li id="as-submit">
+        <input type="submit" value="Explore">
+        <span onclick="jQuery(this).closest('form').submit();">
+          <i class="fa fa-search"></i>
         </span>
       </li>
     </form>
@@ -242,12 +242,17 @@
 
           <ul class="navigation">
             <li>
-              <a href="#" class="search_popup_open">Explore</a>
-              <i class="fa fa-search" style="z-index:1;color:white;width:0;margin-left:0px"></i>
+              <a href="#" class="search_popup_open" id="explore-link">Explore</a>
+              <i id="explore-icon" class="fa fa-search"></i>
             </li>
             <li><a href="/contribution">Contribute</a></li>
             <li class="go--right"><a href="/guest-user/user/me">My Profile</a></li>
             <li class="go--right"><a href="/users/logout">Sign Out</a></li>
+            <li id="m-about"><a href="/about">About</a></li>
+            <li id="m-guidelines"><a href="/tos">Community Guidelines</a></li>
+            <li id="m-instagram"><a href="https://instagram.com/echode_project">Instagram</a></li>
+            <li id="m-twitter"><a href="https://twitter.com/echode_project">Twitter</a></li>
+            <li id="m-facebook"><a href="https://www.facebook.com/Echode-217460368604751">Facebook</a></li>
           </ul>
 
           <?php else: ?>
@@ -255,10 +260,15 @@
           <ul class="navigation">
             <li>
               <a href="#" class="search_popup_open">Explore</a>
-              <i class="fa fa-search" style="z-index:1;color:white;width:0;margin-left:0px"></i>
+              <i id="explore-icon" class="fa fa-search"></i>
             </li>
             <li><a href="/contribution">Contribute</a></li>
             <li class="go--right"><a href="/users/login">Sign In</a></li>
+            <li id="m-about"><a href="/about">About</a></li>
+            <li id="m-guidelines"><a href="/tos">Community Guidelines</a></li>
+            <li id="m-instagram"><a href="https://instagram.com/echode_project">Instagram</a></li>
+            <li id="m-twitter"><a href="https://twitter.com/echode_project">Twitter</a></li>
+            <li id="m-facebook"><a href="https://www.facebook.com/Echode-217460368604751">Facebook</a></li>
           </ul>
 
           <?php endif; ?>

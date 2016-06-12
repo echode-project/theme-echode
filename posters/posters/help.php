@@ -52,7 +52,7 @@
         echo "<button type='button' onclick=\"" . $newAlbumRedirect . "\">Create New Album</button>";
         echo "</form>";
       } else {
-        echo "<a href='/albums/browse/index'>Create an album</a> to add this item to it";
+        echo "<button type='button' onclick=\"" . $newAlbumRedirect . "\">Create New Album</button><div style='text-align:center'>to add this item to it</div>";
       }
     }
   ?>

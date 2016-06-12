@@ -1,6 +1,23 @@
 jQuery(document).ready(function() {
   jQuery('#search_popup').popup({color: 'white', opacity: .85, vertical: 'top', blur: false});
 
+  function trimText(text, cutoffs) {
+    var isMobile = false;
+
+    if (jQuery(window).width() < 800) {
+      isMobile = true;
+    }
+
+    var paragraphs = text.text();
+    var trimmed = paragraphs.substr(0, (isMobile ? cutoffs[0] : cutoffs[1]));
+
+    trimmed = trimmed.substr(0, Math.min(trimmed.length, trimmed.lastIndexOf(" ")));
+
+    if (trimmed.length > 0) {
+      text.text(trimmed + "...");
+    }
+  }
+
   function openPopup(href, item) {
     jQuery('#item_view').popup({color: 'white', opacity: .85, autoopen: true, blur: false, scrolllock: true,
         detach: true, outline: true, beforeopen: function() {
@@ -46,10 +63,16 @@ jQuery(document).ready(function() {
         }
 
         item.find('.nextprev').click(function(e) {
+          var isMobile = false;
+
+          if (jQuery(window).width() < 800) {
+            isMobile = true;
+          }
+
           jQuery('#item_view').popup('hide');
 
           var height = jQuery(window).height() * .8;
-          var width = jQuery(window).width() * .50;
+          var width = jQuery(window).width() * (isMobile ? .8 : .5);
           var href = jQuery(this).attr('href');
 
           /* Popup markup */
@@ -67,9 +90,14 @@ jQuery(document).ready(function() {
       var view = jQuery('#item_view');
       var image = jQuery(view).find('img');
       var text = jQuery(view).find('.single__text');
+      var isMobile = false;
+
+      if (jQuery(window).width() < 800) {
+        isMobile = true;
+      }
 
       if (image.length) {
-        var maxHeight = parseInt(view.css('height')) * .75;
+        var maxHeight = parseInt(view.css('height')) * (isMobile ? .50 : .75);
         var maxWidth = parseInt(view.css('width')) - 20;
         var ratio;
 
@@ -94,22 +122,29 @@ jQuery(document).ready(function() {
           }
         });
       } else {
-        var paragraphs = text.text();
-        var trimmed = paragraphs.substr(0, 1000);
-
-        trimmed = trimmed.substr(0, Math.min(trimmed.length, trimmed.lastIndexOf(" ")));
-        text.text(trimmed + "...");
+        /* Pass cutoff sizes for textual items */
+        trimText(text, [300, 1000]);
       }
+
+      var description = view.find('#description-metadata .dt');
+      trimText(description, [40, 140]);
+
+      /* Screen too small for description */
+      if (isMobile) jQuery(view.find('#description-metadata')).remove();
 
       var itemID = view.find('#title-metadata span').attr('id').split('-')[1];
       var floater = jQuery("<div class='item_view_floater'>" +
         "<a target='_blank' href='/items/show/" + itemID + "'>" +
         "Visit the full record</a> to see more details or leave comments.</div>");
 
-      if (image.length > 0) {
-        floater.insertAfter(image);
+      if (isMobile) {
+        floater.insertAfter(view.find('.metadata').last());
       } else {
-        floater.insertAfter(text);
+        if (image.length > 0) {
+          floater.insertAfter(image);
+        } else {
+          floater.insertAfter(text);
+        }
       }
     }});
   }
@@ -117,8 +152,14 @@ jQuery(document).ready(function() {
   /* Create popup viewer for infinite scroller */
   var ModLinks = function() {
     jQuery(this).click(function(e) {
+      var isMobile = false;
+
+      if (jQuery(window).width() < 800) {
+        isMobile = true;
+      }
+
       var height = jQuery(window).height() * .8;
-      var width = jQuery(window).width() * .50;
+      var width = jQuery(window).width() * (isMobile ? .8 : .5);
       var href = jQuery(this).attr('href');
 
       /* Popup markup */
@@ -254,32 +295,41 @@ jQuery(document).ready(function() {
     }
   });
 
+  function pageNext() {
+    if (jQuery('li.pagination_next a').length) {
+      var nextPage = jQuery('li.pagination_next a').attr('href');
+      var itemsGrid  = jQuery('div.items-grid');
+      var arr = nextPage.split("=");
+      var pageNum = arr[arr.length - 1];
+
+      if (pageNum > 1) {
+        console.log("Getting new page: #" + pageNum);
+        jQuery.get(nextPage, function(data, status) {
+          var html = jQuery(jQuery.parseHTML(data));
+          var links = html.find('div.items-grid a');
+
+          jQuery('li.pagination_next').each(function(index, elem) {
+            jQuery(elem).remove();
+          });
+
+          links.each(ModLinks);
+          itemsGrid.append(links);
+          itemsGrid.append(html.find('li.pagination_next'));
+        });
+      }
+    }
+  }
+
+  /* We need to help iPads out a little on first load  */
+  if (jQuery(window).width() == 768 && (window.location.pathname == '/' || window.location.pathname.substring(0, 13) == '/items/browse')) {
+    pageNext();
+  }
+
   /* Infinite scroll */
   jQuery(window).scroll(function() {
     if (jQuery(window).scrollTop() + jQuery(window).height() == jQuery(document).height()) {
       if (window.location.pathname == '/' || window.location.pathname.substring(0, 13) == '/items/browse') {
-        if (jQuery('li.pagination_next a').length) {
-          var nextPage = jQuery('li.pagination_next a').attr('href');
-          var itemsGrid  = jQuery('div.items-grid');
-          var arr = nextPage.split("=");
-          var pageNum = arr[arr.length - 1];
-
-          if (pageNum > 1) {
-            console.log("Getting new page: #" + pageNum);
-            jQuery.get(nextPage, function(data, status) {
-              var html = jQuery(jQuery.parseHTML(data));
-              var links = html.find('div.items-grid a');
-
-              jQuery('li.pagination_next').each(function(index, elem) {
-                jQuery(elem).remove();
-              });
-
-              links.each(ModLinks);
-              itemsGrid.append(links);
-              itemsGrid.append(html.find('li.pagination_next'));
-            });
-          }
-        }
+        pageNext();
       }
     }
   });
