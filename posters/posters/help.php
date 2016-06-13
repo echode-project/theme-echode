@@ -36,7 +36,7 @@
         echo ' jQuery("#add-to-album").submit();';
         echo '}</script>';
 
-        echo 'Add this item to one of your albums: ';
+        echo 'Add this item to one of your albums:<br>';
         echo '<form method="get" action="/albums/help" id="add-to-album">';
         echo '<input type="hidden" name="item" value="" id="item-album-input">';
         echo '<select name="album" id="albums-select">';
@@ -52,7 +52,7 @@
         echo "<button type='button' onclick=\"" . $newAlbumRedirect . "\">Create New Album</button>";
         echo "</form>";
       } else {
-        echo "<button type='button' onclick=\"" . $newAlbumRedirect . "\">Create New Album</button><div style='text-align:center'>to add this item to it</div>";
+        echo "You can store items in albums<br><button type='button' onclick=\"" . $newAlbumRedirect . "\">Create New Album</button><br>to add this item to it";
       }
     }
   ?>

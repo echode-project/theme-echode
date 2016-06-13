@@ -1,6 +1,7 @@
 jQuery(document).ready(function() {
   jQuery('#search_popup').popup({color: 'white', opacity: .85, vertical: 'top', blur: false});
 
+  /* Trims text for mobile or desktop popup display */
   function trimText(text, cutoffs) {
     var isMobile = false;
 
@@ -18,6 +19,31 @@ jQuery(document).ready(function() {
     }
   }
 
+  var ImageResize = function(image, maxWidth, maxHeight) {
+    var imgHeight = image.height();
+    var imgWidth = image.width();
+
+    if (imgHeight == 0) {
+      console.log("Image height: 0");
+    }
+
+    if (imgWidth > maxWidth){
+      ratio = maxWidth / imgWidth;
+      image.css("width", maxWidth);
+      image.css("height", imgHeight * ratio);
+    }
+
+    imgHeight = image.height();
+    imgWidth = image.width();
+
+    if (imgHeight > maxHeight){
+      ratio = maxHeight / imgHeight;
+      image.css("height", maxHeight);
+      image.css("width", imgWidth * ratio);
+    }
+  }
+
+  /* Opens image navigation popup */
   function openPopup(href, item) {
     jQuery('#item_view').popup({color: 'white', opacity: .85, autoopen: true, blur: false, scrolllock: true,
         detach: true, outline: true, beforeopen: function() {
@@ -102,6 +128,16 @@ jQuery(document).ready(function() {
         var ratio;
 
         /* Scale image to fit in popup */
+        /*
+           Odd behavior here. It works with an inline function but not an external function(?!)
+
+           jQuery warns there are issues related to trying to detect image loads with .load():
+             http://api.jquery.com/load-event/
+
+           StackOverflow recommends an external library to supposedly resolve all the weirdness:
+             https://github.com/desandro/imagesloaded
+        */
+        //image.load(ImageResize(image, maxWidth, maxHeight));
         image.load(function() {
           var imgHeight = image.height();
           var imgWidth = image.width();
@@ -181,6 +217,35 @@ jQuery(document).ready(function() {
     }
   }
 
+  /* Add a button that enables bookmarking in albums */
+  if (window.location.pathname.substring(0, 12) == '/items/show/') {
+    jQuery('#album_add_popup').popup({color: 'white', opacity: .85, outline: true, border: true, blur: false});
+
+    if (jQuery('meta[name="omeka-user-id"]').length > 0) {
+      var itemFile = jQuery('.item-file');
+      var image = itemFile.find('img');
+
+      if (itemFile.length > 0) {
+        jQuery('<a href="#" onclick="jQuery(\'#album_add_popup\').popup(\'show\');">'+
+          '<i class="fa fa-plus fa-lg" id="add-to-album-button"></i></a>').appendTo(itemFile);
+      } else {
+        jQuery('<a href="#" onclick="jQuery(\'#album_add_popup\').popup(\'show\');">'+
+          '<i class="fa fa-plus fa-lg" style="float:right"></i></a>').appendTo(jQuery('.single__text'));
+      }
+
+      if (image.length > 0) {
+        var offset = parseInt(jQuery('article.section').css('padding-top').replace('px',''));
+        var maxHeight = jQuery(window).height()-jQuery('header').height()-jQuery('footer').height()-offset;
+        var maxWidth = jQuery(window).width();
+
+        ImageResize(image, maxWidth, maxHeight);
+
+        var position = (itemFile.width() - image.width()) / 2 + 5;
+        jQuery('#add-to-album-button').css('margin-right', position + "px");
+      }
+    }
+  }
+
   // Fixing what isn't extensible through plugin theme override(?!)
   if (window.location.pathname.substring(0, 22) == '/albums/delete-confirm') {
     var wrapper = jQuery('.content-wrapper');
@@ -207,15 +272,6 @@ jQuery(document).ready(function() {
   /* Make geolocation map extend to height of page */
   if (window.location.pathname == '/items/map') {
     jQuery('#geolocation-browse').css('height', jQuery(window).height()-jQuery('header').height()*2 + 27);
-  }
-
-  if (window.location.pathname.substr(0, 11) === '/items/show') {
-    var itemImage = jQuery("div.item-file a img.full");
-    var height = jQuery(window).height() - jQuery('header').height()*2;
-
-    itemImage.css('width', 'auto');
-    itemImage.css('max-width', 'auto');
-    itemImage.css('max-height', height + 'px');
   }
 
   /* Construct valid date range for advanced search */

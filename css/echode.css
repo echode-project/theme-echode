@@ -4674,13 +4674,13 @@ div#item_view article {
   margin-top: 1em;
 }
 
-.album_add {
-  float: right;
-  padding: 5px;
-}
-
 .poster-field {
   padding-bottom: 15px;
+}
+
+.album_add {
+  text-align:center;
+  padding-top:10px;
 }
 
 #album-view h1 {
@@ -4930,4 +4930,32 @@ div#item_view article {
 
 .team__column img {
   max-width: 100%;
+}
+
+.download-file img {
+  width: 100%;
+  max-wdith: 100%;
+}
+
+#add-to-album-button {
+  background-color:white;
+  border-radius:25px;
+  padding:4px;
+  float:right;
+  margin-top:-28px;
+  position:relative;
+}
+
+#album_add_popup {
+  background-color: white;
+  width: 300px;
+  padding: 20px;
+}
+
+.album_add_popup_close {
+  margin-right: -18px;
+  margin-top:-18px;
+}
+
+#album_add_popup div {
 }

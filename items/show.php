@@ -1,7 +1,19 @@
 <?php echo head(array('title' => metadata('item', array('Dublin Core', 'Title')), 'bodyclass' => 'items show')); ?>
 
-<article class="single section" itemscope="" itemtype="http://www.schema.org/Article">
+<div id="album_add_popup">
+  <button class="popup_close album_add_popup_close"><i class="fa fa-times"></i></button>
+  <div class="album_add">
+    <?php if (!is_null(current_user())): ?>
+      <script>
+        jQuery.get('/albums/help?get-albums=true', function(data){
+          jQuery('.album_add').html(data);
+        });
+      </script>
+    <?php endif; ?>
+  </div>
+</div>
 
+<article class="single section" itemscope="" itemtype="http://www.schema.org/Article">
   <?php if (metadata('item', 'has files')): ?>
   <div class="container container--medium">
     <div class="single__image">
@@ -81,15 +93,6 @@
 
     <div class="single_share">
       <?php echo get_specific_plugin_hook_output('SocialBookmarking', 'public_items_show', array('view' => $this, 'item' => $item)); ?>
-    </div>
-    <div class="album_add">
-      <?php if (!is_null(current_user())): ?>
-        <script>
-          jQuery.get('/albums/help?get-albums=true', function(data){
-            jQuery('.album_add').html(data);
-          });
-        </script>
-      <?php endif; ?>
     </div>
   </div>
 

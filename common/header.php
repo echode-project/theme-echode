@@ -22,6 +22,9 @@
   <meta name="msapplication-TileColor" content="#003144">
   <meta name="msapplication-TileImage" content="<?php echo img('ms-icon-144x144.png'); ?>">
   <meta name="theme-color" content="#003144">
+  <?php if (!is_null(current_user())): ?>
+  <meta name="omeka-user-id" content="<?php echo current_user()->id; ?>">
+  <?php endif; ?>
 
   <?php if ( $description = option('description')): ?>
   <meta name="description" content="<?php echo $description; ?>">
