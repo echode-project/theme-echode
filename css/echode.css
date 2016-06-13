@@ -4615,7 +4615,8 @@ ul.pagination {
 }
 
 #item_view article div.container {
-  margin: 10px 6px 10px 6px;
+  /*margin: 10px 6px 10px 6px;*/
+  margin-top:10px;
 }
 
 #item_view article {
