@@ -3,6 +3,57 @@
   <p><?php echo __('You must choose a contribution type to continue.'); ?></p>
 <?php else: ?>
 
+  <?php if ($type->isFileRequired() || $type->isFileAllowed()): ?>
+  <script>
+    function rotateThumbnail(id) {
+      var hash = window.btoa(encodeURIComponent(escape(id)));
+      var hashedId = 'dz-rotation_' + hash.replace(new RegExp('[\+=\/]', 'g'), '');
+      var rotation = jQuery('#' + hashedId);
+      var img = jQuery('.dz-image img[alt="' + id + '"]');
+
+      if (rotation.length < 1) {
+        jQuery('#contribute').append('<input type="hidden" name="' + hashedId + '" id="' + hashedId + '" value="90" />');
+        img.addClass("rotate90");
+      } else {
+        var currentRotation = rotation.val();
+
+        if (currentRotation == "0") {
+          rotation.val("90");
+          img.addClass("rotate90");
+        } else if (currentRotation == "90") {
+          rotation.val("180");
+          img.removeClass("rotate90");
+          img.addClass("rotate180");
+        } else if (currentRotation == "180") {
+          img.removeClass("rotate180");
+          img.addClass("rotate270");
+          rotation.val("270");
+        } else if (currentRotation == "270") {
+          img.removeClass("rotate270");
+          rotation.val("0");
+        } else {
+          console.log("Unexpected rotation value: " + currentRotation);
+        }
+      }
+    }
+  </script>
+
+  <div style="display:none" id="odz-template">
+    <div class="dz-preview dz-image-preview">
+      <div class="dz-image"><img data-dz-thumbnail /></div>
+      <div class="dz-details">
+        <span onclick="rotateThumbnail(jQuery(this).closest('.dz-preview').find('.dz-image img').attr('alt'));" class="fa-stack fa-lg">
+          <i class="fa fa-square fa-stack-2x"></i>
+          <i class="fa fa-rotate-right fa-stack-1x fa-inverse"></i>
+        </span>
+      </div>
+      <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
+      <div class="dz-error-message"><span data-dz-errormessage></span></div>
+      <div class="dz-success-mark"></div>
+    </div>
+  </div>
+  <?php endif; ?>
+
   <?php if ($type->isFileRequired()): $required = true; ?>
     <?php echo $this->formLabel('contributed_file', __('Upload photo(s) [required]')); ?>
 
@@ -12,7 +63,6 @@
     <div id="odz-fallback">
      <?php echo $this->formFile('contributed_file', array('class' => 'fileinput')); ?>
     </div>
-    <input type="hidden" name="dz-rotation" id="dz-rotation" value="90" />
   <?php endif; ?>
 
   <?php
@@ -30,7 +80,6 @@
     <div id="odz-fallback">
       <?php echo $this->formFile('contributed_file', array('class' => 'fileinput')); ?>
     </div>
-    <input type="hidden" name="dz-rotation" id="dz-rotation" value="" />
   <?php endif; ?>
 
   <?php $user = current_user(); ?>

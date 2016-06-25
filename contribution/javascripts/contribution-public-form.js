@@ -5,13 +5,16 @@ function toggleProfileEdit() {
 }
 
 function initDropzone(maxFilesVar) {
-  jQuery("#omekaDZ").dropzone({
+  var previewTemplate = jQuery('#odz-template').html();
+
+  var oDropzone = new Dropzone("#omekaDZ", {
     url: "/contribution",
     paramName: "contributed_file",
     autoProcessQueue: false,
     parallelUploads: 1,
     addRemoveLinks: true,
     maxFiles: maxFilesVar,
+    previewTemplate: previewTemplate,
     headers: {
       'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
     },
@@ -34,9 +37,6 @@ function initDropzone(maxFilesVar) {
         file.previewElement.classList.add("dz-success");
       }
     },
-    error: function(file, response) {
-      file.previewElement.classList.add("dz-error");
-    },
     sending: function(file, xhr, formData) {
       var values = jQuery('#contribute').serialize().split('&');
 
@@ -57,7 +57,9 @@ function initDropzone(maxFilesVar) {
       this.options.autoProcessQueue = true;
     },
     renameFilename: function(filename) {
-      var dzRotation = jQuery('#dz-rotation').val();
+      var hash = window.btoa(encodeURIComponent(escape(filename)));
+      var hashedId = 'dz-rotation_' + hash.replace(new RegExp('[\+=\/]', 'g'), '');
+      var dzRotation = jQuery('#' + hashedId).val();
 
       if (parseInt(dzRotation) == dzRotation) {
         return dzRotation + "_~_" + filename;
@@ -67,7 +69,7 @@ function initDropzone(maxFilesVar) {
     },
     queuecomplete: function() {
       if (jQuery('div#flash').length < 1) {
-        //window.location = window.location.href + '/thankyou';
+        window.location = window.location.href + '/thankyou';
       }
     }
   });
