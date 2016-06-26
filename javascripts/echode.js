@@ -112,7 +112,7 @@ jQuery(document).ready(function() {
           e.preventDefault();
         });
       });
-    }, onopen: function(){
+    }, onopen: function() {
       var view = jQuery('#item_view');
       var image = jQuery(view).find('img');
       var text = jQuery(view).find('.single__text');

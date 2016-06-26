@@ -6,8 +6,8 @@
   <?php if ($type->isFileRequired() || $type->isFileAllowed()): ?>
   <script>
     function rotateThumbnail(id) {
-      var hash = window.btoa(encodeURIComponent(escape(id)));
-      var hashedId = 'dz-rotation_' + hash.replace(new RegExp('[\+=\/]', 'g'), '');
+      var simpleHash = window.btoa(encodeURIComponent(escape(id)));
+      var hashedId = 'dz-rotation_' + simpleHash.replace(new RegExp('[\+=\/]', 'g'), '');
       var rotation = jQuery('#' + hashedId);
       var img = jQuery('.dz-image img[alt="' + id + '"]');
 
