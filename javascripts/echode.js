@@ -115,6 +115,7 @@ jQuery(document).ready(function() {
     }, onopen: function() {
       var view = jQuery('#item_view');
       var image = jQuery(view).find('img');
+      var imageParent = image.parent();
       var text = jQuery(view).find('.single__text');
       var isMobile = false;
 
@@ -124,7 +125,7 @@ jQuery(document).ready(function() {
 
       if (image.length) {
         var maxHeight = parseInt(view.css('height')) * (isMobile ? .50 : .75);
-        var maxWidth = parseInt(view.css('width')) - 20;
+        var maxWidth = parseInt(imageParent.css('width'));
         var ratio;
 
         /* Scale image to fit in popup */
