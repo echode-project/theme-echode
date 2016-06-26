@@ -107,7 +107,6 @@ jQuery(document).ready(function() {
 
           /* Put our popup on the page so it can popup */
           jQuery('.items-grid').append(item);
-
           openPopup(href, item);
           e.preventDefault();
         });
@@ -115,7 +114,6 @@ jQuery(document).ready(function() {
     }, onopen: function() {
       var view = jQuery('#item_view');
       var image = jQuery(view).find('img');
-      var imageParent = image.parent();
       var text = jQuery(view).find('.single__text');
       var isMobile = false;
 
@@ -125,7 +123,7 @@ jQuery(document).ready(function() {
 
       if (image.length) {
         var maxHeight = parseInt(view.css('height')) * (isMobile ? .50 : .75);
-        var maxWidth = parseInt(imageParent.css('width'));
+        var maxWidth = parseInt(image.parent().css('width'));
         var ratio;
 
         /* Scale image to fit in popup */
