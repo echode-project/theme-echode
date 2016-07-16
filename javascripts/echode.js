@@ -184,35 +184,51 @@ jQuery(document).ready(function() {
     }});
   }
 
+  var getQueryString = function(field, url) {
+    var href = url ? url : window.location.href;
+    var reg = new RegExp( '[?&]' + field + '=([^&#]*)', 'i' );
+    var string = reg.exec(href);
+    return string ? string[1] : null;
+  };
+
   /* Create popup viewer for infinite scroller */
   var ModLinks = function() {
     jQuery(this).click(function(e) {
-      var isMobile = false;
-
-      if (jQuery(window).width() < 800) {
-        isMobile = true;
+      if (getQueryString('skipPopups') == "true") {
+        jQuery(this).attr('target', '_blank');
       }
+      else {
+        var isMobile = false;
 
-      var height = jQuery(window).height() * .8;
-      var width = jQuery(window).width() * (isMobile ? .8 : .5);
-      var href = jQuery(this).attr('href');
+        if (jQuery(window).width() < 800) {
+          isMobile = true;
+        }
 
-      /* Popup markup */
-      var item = jQuery("<div id='item_view' style='width:" + width  + "px;height:" + height + "px;'>" +
-        "<button class='popup_close item_view_close'><i class='fa fa-times'></i></button></div>");
+        var height = jQuery(window).height() * .8;
+        var width = jQuery(window).width() * (isMobile ? .8 : .5);
+        var href = jQuery(this).attr('href');
 
-      /* Put our popup on the page so it can popup */
-      jQuery('.items-grid').append(item);
+        /* Popup markup */
+        var item = jQuery("<div id='item_view' style='width:" + width  + "px;height:" + height + "px;'>" +
+          "<button class='popup_close item_view_close'><i class='fa fa-times'></i></button></div>");
 
-      openPopup(href, item);
-      e.preventDefault();
+        /* Put our popup on the page so it can popup */
+        jQuery('.items-grid').append(item);
+
+        openPopup(href, item);
+        e.preventDefault();
+      }
     });
   }
 
   if (window.location.pathname == '/items/browse') {
-    if (localStorage.getItem("openExplore") !== null && localStorage.openExplore == 'true') {
+    if (localStorage.getItem('openExplore') !== null && localStorage.openExplore == 'true') {
       jQuery('#search_popup').popup('show');
       localStorage.removeItem('openExplore');
+    }
+    if (localStorage.getItem('shortcutBrowse') !== null && localStorage.shortcutBrowse == 'true') {
+      localStorage.removeItem('shortcutBrowse');
+      jQuery('#advanced-search-form').append('<input type="hidden" name="skipPopups" value="true"/>');
     }
   }
 
@@ -225,11 +241,11 @@ jQuery(document).ready(function() {
       var image = itemFile.find('img');
 
       if (itemFile.length > 0) {
-        jQuery('<a href="#" onclick="jQuery(\'#album_add_popup\').popup(\'show\');">'+
-          '<i class="fa fa-plus fa-lg" id="add-to-album-button"></i></a>').appendTo(itemFile);
+        jQuery('<a href="#" onclick="jQuery(\'#album_add_popup\').popup(\'show\');" title="Add to album" alt="Add to album">'+
+          '<i class="fa fa-plus fa-3x" id="add-to-album-button"></i></a>').appendTo(itemFile);
       } else {
-        jQuery('<a href="#" onclick="jQuery(\'#album_add_popup\').popup(\'show\');">'+
-          '<i class="fa fa-plus fa-lg" style="float:right"></i></a>').appendTo(jQuery('.single__text'));
+        jQuery('<a href="#" onclick="jQuery(\'#album_add_popup\').popup(\'show\');" title="Add to album" alt="Add to album">'+
+          '<i class="fa fa-plus fa-3x" style="float:right"></i></a>').appendTo(jQuery('.single__text'));
       }
 
       if (image.length > 0) {

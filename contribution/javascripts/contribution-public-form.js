@@ -42,26 +42,25 @@ function initDropzone(maxFilesVar) {
       var hashedBaseId = simpleHash.replace(new RegExp('[\+=\/]', 'g'), '');
       var contributionForm = jQuery('#contribute');
 
-      var titleField = contributionForm.find('#Elements-50-0-text');
-      var titleFieldVal = titleField.val();
+      var dateField = contributionForm.find('#Elements-40-0-text');
+      var dateFieldVal = dateField.val();
+      var dimensionsField = contributionForm.find('#Elements-10-0-text');
+      var dimensionsFieldVal = dimensionsField.val();
       var descriptionField = contributionForm.find('#Elements-41-0-text');
       var descriptionFieldVal = descriptionField.val();
+      var formatField = contributionForm.find('#Elements-42-0-text');
+      var formatFieldVal = formatField.val();
 
-      var subtitle = contributionForm.find('#dz-subtitle_' + hashedBaseId);
-      var otherTopic = contributionForm.find('#dz-topic_' + hashedBaseId);
+      var otherDate = contributionForm.find('#dz-date_' + hashedBaseId);
+      var otherDimensions = contributionForm.find('#dz-dimensions_' + hashedBaseId);
       var moreDescription = contributionForm.find('#dz-description_' + hashedBaseId);
+      var otherFormat = contributionForm.find('#dz-format_' + hashedBaseId);
 
-      if (subtitle.length > 0) {
-        if (titleFieldVal == undefined || titleFieldVal.trim().length < 1) {
-          titleField.val(subtitle.val());
-        } else if (titleFieldVal.indexOf(':') > -1) {
-          titleField.val(titleFieldVal + ' - ' + subtitle.val());
-        } else {
-          titleField.val(titleFieldVal + ': ' + subtitle.val());
-        }
+      if (otherDate.length > 0) {
+        dateField.val(otherDate.val());
       }
-      if (otherTopic.length > 0) {
-        contributionForm.append(jQuery('<input type="hidden" name="Elements[49][1][text]" id="Elements-49-1-text" value="' + otherTopic.val() + '">'));
+      if (otherDimensions.length > 0) {
+        dimensionsField.val(otherDimensions.val());
       }
       if (moreDescription.length > 0) {
         if (descriptionFieldVal == undefined || descriptionFieldVal.trim().length < 1) {
@@ -71,6 +70,9 @@ function initDropzone(maxFilesVar) {
         } else {
           descriptionField.val(descriptionFieldVal + '. ' + moreDescription.val());
         }
+      }
+      if (otherFormat.length > 0) {
+        formatField.val(otherFormat.val());
       }
 
       var values = contributionForm.serialize().split('&');
@@ -88,10 +90,11 @@ function initDropzone(maxFilesVar) {
 
       formData.append('form-submit', 'Contribute');
 
-      // Restore the state of our form for the next upload
-      jQuery(contributionForm.find('#Elements-49-1-text')).remove();
-      titleField.val(titleFieldVal);
+      // Restore the form for the next item to be processed
+      dateField.val(dateFieldVal);
+      dimensionsField.val(dimensionsFieldVal);
       descriptionField.val(descriptionFieldVal);
+      formatField.val(formatFieldVal);
     },
     processing: function() {
       this.options.autoProcessQueue = true;
@@ -116,7 +119,7 @@ function initDropzone(maxFilesVar) {
 
   oDropzone.on("addedfile", function(file) {
     var timestamp = new Date().getTime();
-    var details = Dropzone.createElement('<a class="dz-edit-details" id="dz-edit-' + timestamp  + '" href="">Add details</a>');
+    var details = Dropzone.createElement('<a class="dz-edit-details" id="dz-edit-' + timestamp  + '" href="">Image Details</a>');
     var help = jQuery('#crowd-shortcut');
 
     file.previewElement.appendChild(details);
@@ -132,24 +135,50 @@ function initDropzone(maxFilesVar) {
 
       var simpleHash = window.btoa(encodeURIComponent(escape(file.name)));
       var hashedBaseId = simpleHash.replace(new RegExp('[\+=\/]', 'g'), '');
-      var popup = "", subtitleVal = "", topicVal = "", descriptionVal = "" ;
+      var popup = "", dateVal = "", dimensionsVal = "", descriptionVal = "", formatVal = "";
       var contributionForm = jQuery('#contribute');
 
-      var subtitle = contributionForm.find('#dz-subtitle_' + hashedBaseId);
-      var topic = contributionForm.find('#dz-topic_' + hashedBaseId);
+      var date = contributionForm.find('#dz-date_' + hashedBaseId);
+      var dimensions = contributionForm.find('#dz-dimensions_' + hashedBaseId);
       var description = contributionForm.find('#dz-description_' + hashedBaseId);
+      var format = contributionForm.find('#dz-format_' + hashedBaseId);
 
-      if (subtitle.length > 0) subtitleVal = subtitle.val();
-      if (topic.length > 0) topicVal = topic.val();
+      if (date.length > 0) dateVal = date.val();
+      if (dimensions.length > 0) dimensionsVal = dimensions.val();
       if (description.length > 0) descriptionVal = description.val();
+      if (format.length > 0) formatVal = format.val();
 
       popup += '<div id="' + hashedBaseId  + '_details_popup" class="details_popup">';
-      popup += '<span id="popup_title">Additional Details</span>';
+      popup += '<span id="popup_title">Image Details</span>';
       popup += '<button class="popup_close ' + hashedBaseId + '_details_popup_close details_popup_close"><i class="fa fa-times"></i></button>';
       popup += '<div class="additional_details"><form id="form_' + hashedBaseId  + '" class="additional_details_form" method="get" action="#"><dl>';
-      popup += '<dt>Title:</dt><dd><input name="dz-subtitle" id="dz-subtitle" type="text" value="' + subtitleVal  + '"></dd>';
-      popup += '<dt>Topic:</dt><dd><input name="dz-topic" id="dz-topic" type="text" value="' + topicVal  + '"></dd>';
-      popup += '<dt>Description:</dt><dd><textarea name="dz-description" id="dz-description" rows="8">' + descriptionVal + '</textarea></dd>';
+      popup += '<dt>Description:</dt><dd><div class="smTxt">Narrative description of the item</div><textarea name="dz-description" id="dz-description" rows="8">' + descriptionVal + '</textarea></dd>';
+      popup += '<dt>Date:</dt><dd><div class="smTxt">I.e. 1936-03-24, 2000-2010, etc.</div><input name="dz-date" id="dz-date" type="text" value="' + dateVal  + '"></dd>';
+      popup += '<dt>Dimensions:</dt><dd><div class="smTxt">Size of the item (i.e. 4 x 5 in, etc.)</div><input name="dz-dimensions" id="dz-dimensions" type="text" value="' + dimensionsVal  + '"></dd>';
+
+      popup += '<dt>Format:</dt><dd><div class="smTxt">The file format or physical medium</div><select name="dz-format" id="dz-format">';
+      popup += ('<option ' + (formatVal == '' ? 'selected="selected"' : '') + ' value=""></option>');
+      popup += ('<option ' + (formatVal == 'color photographs' ? 'selected="selected"' : '') + ' value="color photographs">color photographs</option>');
+      popup += ('<option ' + (formatVal == 'aerial photographs' ? 'selected="selected"' : '') + ' value="aerial photographs">aerial photographs</option>');
+      popup += ('<option ' + (formatVal == 'astrophotographs' ? 'selected="selected"' : '') + ' value="astrophotographs">astrophotographs</option>');
+      popup += ('<option ' + (formatVal == 'black-and-white photographs' ? 'selected="selected"' : '') + ' value="black-and-white photographs">black-and-white photographs</option>');
+      popup += ('<option ' + (formatVal == 'boudoir photographs' ? 'selected="selected"' : '') + ' value="boudoir photographs">boudoir photographs</option>');
+      popup += ('<option ' + (formatVal == 'cabinet photographs' ? 'selected="selected"' : '') + ' value="cabinet photographs">cabinet photographs</option>');
+      popup += ('<option ' + (formatVal == 'composite photographs' ? 'selected="selected"' : '') + ' value="composite photographs">composite photographs</option>');
+      popup += ('<option ' + (formatVal == 'copy prints' ? 'selected="selected"' : '') + ' value="copy prints">copy prints</option>');
+      popup += ('<option ' + (formatVal == 'digital images' ? 'selected="selected"' : '') + ' value="digital images">digital images</option>');
+      popup += ('<option ' + (formatVal == 'documentary photographs' ? 'selected="selected"' : '') + ' value="documentary photographs">documentary photographs</option>');
+      popup += ('<option ' + (formatVal == 'dye diffusion transfer prints' ? 'selected="selected"' : '') + ' value="dye diffusion transfer prints">dye diffusion transfer prints</option>');
+      popup += ('<option ' + (formatVal == 'fashion photographs' ? 'selected="selected"' : '') + ' value="fashion photographs">fashion photographs</option>');
+      popup += ('<option ' + (formatVal == 'forensic photographs' ? 'selected="selected"' : '') + ' value="forensic photographs">forensic photographs</option>');
+      popup += ('<option ' + (formatVal == 'identification photographs' ? 'selected="selected"' : '') + ' value="identification photographs">identification photographs</option>');
+      popup += ('<option ' + (formatVal == 'news photographs' ? 'selected="selected"' : '') + ' value="news photographs">news photographs</option>');
+      popup += ('<option ' + (formatVal == 'photograph albums' ? 'selected="selected"' : '') + ' value="photograph albums">photograph albums</option>');
+      popup += ('<option ' + (formatVal == 'photomurals' ? 'selected="selected"' : '') + ' value="photomurals">photomurals</option>');
+      popup += ('<option ' + (formatVal == 'radiographs' ? 'selected="selected"' : '') + ' value="radiographs">radiographs</option>');
+      popup += ('<option ' + (formatVal == 'wire photographs' ? 'selected="selected"' : '') + ' value="wire photographs">wire photographs</option>');
+      popup += '</select></dd>';
+
       popup += '</dl></form></div>';
       popup += '</div>';
 
@@ -160,32 +189,40 @@ function initDropzone(maxFilesVar) {
         event.preventDefault();
 
         var realForm = jQuery('#contribute');
-        var formSubtitle = realForm.find('#dz-subtitle_' + hashedBaseId);
-        var formTopic = realForm.find('#dz-topic_' + hashedBaseId);
+        var formDate = realForm.find('#dz-date_' + hashedBaseId);
+        var formDimensions = realForm.find('#dz-dimensions_' + hashedBaseId);
         var formDescription = realForm.find('#dz-description_' + hashedBaseId);
+        var formFormat = realForm.find('#dz-format_' + hashedBaseId);
 
         var thisForm = jQuery('#form_' + hashedBaseId);
-        var sValue = thisForm.find('#dz-subtitle').val();
-        var tValue = thisForm.find('#dz-topic').val();
-        var dValue = thisForm.find('#dz-description').val();
+        var dateValue = thisForm.find('#dz-date').val();
+        var dimensionsValue = thisForm.find('#dz-dimensions').val();
+        var descriptionValue = thisForm.find('#dz-description').val();
+        var formatValue = thisForm.find('#dz-format').val();
 
-        if (formSubtitle.length > 0) {
-          formSubtitle.val(sValue);
-        } else if (sValue != undefined && sValue.length > 1) {
-          var subtitleId = 'dz-subtitle_' + hashedBaseId;
-          jQuery('#contribute').append('<input type="hidden" id="' + subtitleId + '" name="' + subtitleId + '" value="' + sValue + '">');
+        if (formDate.length > 0) {
+          formDate.val(dateValue);
+        } else if (dateValue != undefined && dateValue.length > 1) {
+          var dateId = 'dz-date_' + hashedBaseId;
+          jQuery('#contribute').append('<input type="hidden" id="' + dateId + '" name="' + dateId + '" value="' + dateValue + '">');
         }
-        if (formTopic.length > 0) {
-          formTopic.val(tValue);
-        } else if (tValue != undefined && tValue.length > 1) {
-          var topicId = 'dz-topic_' + hashedBaseId;
-          jQuery('#contribute').append('<input type="hidden" id="' + topicId + '" name="' + topicId + '" value="' + tValue + '">');
+        if (formDimensions.length > 0) {
+          formDimensions.val(dimensionsValue);
+        } else if (dimensionsValue != undefined && dimensionsValue.length > 1) {
+          var dimensionsId = 'dz-dimensions_' + hashedBaseId;
+          jQuery('#contribute').append('<input type="hidden" id="' + dimensionsId + '" name="' + dimensionsId + '" value="' + dimensionsValue + '">');
         }
         if (formDescription.length > 0) {
-          formDescription.val(dValue);
-        } else if (dValue != undefined && dValue.length > 1) {
+          formDescription.val(descriptionValue);
+        } else if (descriptionValue != undefined && descriptionValue.length > 1) {
           var descriptionId = 'dz-description_' + hashedBaseId;
-          jQuery('#contribute').append('<input type="hidden" id="' + descriptionId + '" name="' + descriptionId + '" value="' + dValue + '">');
+          jQuery('#contribute').append('<input type="hidden" id="' + descriptionId + '" name="' + descriptionId + '" value="' + descriptionValue + '">');
+        }
+        if (formFormat.length > 0) {
+          formFormat.val(formatValue);
+        } else if (formatValue != undefined && formatValue.length > 1) {
+          var formatId = 'dz-format_' + hashedBaseId;
+          jQuery('#contribute').append('<input type="hidden" id="' + formatId + '" name="' + formatId + '" value="' + formatValue + '">');
         }
       });
 
@@ -242,6 +279,174 @@ function enableContributionAjaxForm(url) {
 
               // If we have a dropzone, initialize it
               initDropzone(maxFilesVar);
+
+              // Then we have Echode form customizations
+              var story = jQuery("#element-1");
+
+              // IF story ELSE photos
+              if (story.length) {
+                var photoLabel = jQuery("label[for='contributed_file']").detach();
+                var photo = jQuery("#omekaDZ").detach();
+                var photoFallback = jQuery("odz-fallback").detach();
+
+                story.after(photoFallback);
+                story.after(photo);
+                story.after(photoLabel);
+
+                var storyLabel = jQuery("#element-1 div label");
+                storyLabel.append("<span class='req'>&nbsp;&nbsp;*</span>");
+
+                jQuery('#contribute').append('<input type="hidden" name="Elements[51][0][text]" id="Elements-51-0-text" value="Document">');
+              } else {
+                jQuery("label[for='contributed_file']").append("<span class='req'>&nbsp;&nbsp;*</span>");
+
+                var format = jQuery("#element-42 div label");
+                format.append("<span class='req'>&nbsp;&nbsp;*</span>");
+                format.after("<div class='smTxt'>The file format or physical medium.</div>");
+
+                var dimensions = jQuery("#element-10 div label");
+                dimensions.append("<span class='req'>&nbsp;&nbsp;*</span>");
+                dimensions.after("<div class='smTxt'>Size of the item. (i.e. 4 x 5 in, 8 x 10 in, etc.)</div>");
+
+                jQuery('#contribute').append('<input type="hidden" name="Elements[51][0][text]" id="Elements-51-0-text" value="Still Image">');
+              }
+
+              var title = jQuery("#element-50 div label");
+              title.append("<span class='req'>&nbsp;&nbsp;*</span>");
+              title.after("<div class='smTxt'>A name given to this contribution (ie. Basketball Practice). It is up to you to decide how much information to include.</div>");
+
+              var subject = jQuery("#element-49 div label");
+              subject.append("<span class='req'>&nbsp;&nbsp;*</span>");
+              subject.after("<div class='smTxt'>What is this resource about?</div>");
+
+              var subjectInput = jQuery("#Elements-49-0-text");
+              var subjectSelect = '<select name="Elements[49][0][text]" id="Elements-49-0-text">';
+              subjectSelect += '<option selected="selected" value=""></option>';
+              subjectSelect += '<option value="Education">Education</option>';
+              subjectSelect += '<option value="Religion">Religion</option>';
+              subjectSelect += '<option value="Race">Race</option>';
+              subjectSelect += '<option value="Agriculture">Agriculture</option>';
+              subjectSelect += '<option value="Legal affairs">Legal affairs</option>';
+              subjectSelect += '<option value="Industry">Industry</option>';
+              subjectSelect += '<option value="Civic life">Civic life</option>';
+              subjectSelect += '<option value="Military">Military</option>';
+              subjectSelect += '<option value="Healthcare">Healthcare</option>';
+              subjectSelect += '<option value="Politics">Politics</option>';
+              subjectSelect += '<option value="Athletics">Athletics</option>';
+              subjectSelect += '<option value="Recreation">Recreation</option>';
+              subjectSelect += '<option value="Towns and districts">Towns and districts</option>';
+              subjectSelect += '<option value="Family records">Family records</option>';
+              subjectSelect += '<option value="Food and drink">Food and drink</option>';
+              subjectSelect += '<option value="Crime">Crime</option>';
+              subjectSelect += '</select>';
+              subjectInput.replaceWith(subjectSelect);
+
+              var description = jQuery("#element-41 div label");
+              description.append("<span class='req'>&nbsp;&nbsp;*</span>");
+              description.after("<div class='smTxt'>Narrative description of the item. This free-text description can be as short or as long as necessary.</div>");
+
+              var creator = jQuery("#element-39 div label");
+              creator.append("<span class='req'>&nbsp;&nbsp;*</span>");
+              creator.after("<div class='smTxt'>Institutions or individuals that created or assembled this item. (ie. original photographer, author, artist, performer, etc.)</div>");
+
+              var source = jQuery("#element-48 div label");
+              source.append("<span class='req'>&nbsp;&nbsp;*</span>");
+              source.after("<div class='smTxt'>A related resource from which the described resource is derived. (ie. newspaper, magazine, etc.)</div>");
+
+              var publisher = jQuery("#element-45 div label");
+              publisher.after("<div class='smTxt'>An entity responsible for making the resource available (ie. an actual publisher, if there is one; entity or consortium publishing digital materials.)</div>");
+
+              var date = jQuery("#element-40 div label");
+              date.append("<span class='req'>&nbsp;&nbsp;*</span>");
+              date.after("<div class='smTxt'>Your best assessment of a point or period of time associated with an event in the contents of the resource (ie. When was this picture taken or article written?) Please use the following format: 4DigitYear-2DigitMonth-2DigitDay (ie. 1936-03-24). If you do not know an accurate date, please enter your most accurate guess using a range (ie. 1906 - 1910).</div>");
+
+              var rights = jQuery("#element-47 div label");
+              rights.append("<span class='req'>&nbsp;&nbsp;*</span>");
+              rights.after("<div class='smTxt'>Please designate the usage rights granted upon upload by the person or organization owning or managing the resource.</div>");
+
+              var rightsInput = jQuery("#Elements-47-0-text");
+              var rightsRadio = '<input type="radio" value="Public Domain" id="dz-rights-ignore-PublicDomain" name="dz-rights-ignore" class="Elements-47-0-text" />';
+              rightsRadio += '<label for="Public Domain">Public Domain</label>';
+              rightsRadio += '<input type="radio" value="Creative Commons" id="dz-rights-ignore-CreativeCommons" name="dz-rights-ignore" class="Elements-47-0-text" />';
+              rightsRadio += '<label for="Creative Commons">Creative Commons</label>';
+              rightsRadio += '<input type="radio" value="View Only" id="dz-rights-ignore-ViewOnly" name="dz-rights-ignore" class="Elements-47-0-text" />';
+              rightsRadio += '<label for="View Only">View Only</label>';
+              rightsRadio += '<input type="radio" value="Other" id="dz-rights-ignore-Other" name="dz-rights-ignore" class="Elements-47-0-text" />';
+              rightsRadio += '<label for="Other">Other</label>';
+              rightsRadio += '<input id="Elements-47-0-text" name="Elements[47][0][text]" style="display:none" placeholder="Please enter other license" value="" type="text" />';
+              rightsInput.replaceWith(rightsRadio);
+
+              jQuery(".Elements-47-0-text").change(function() {
+                if (this.checked && this.value === "Other") {
+                  var rightsValue = jQuery("#Elements-47-0-text");
+                  rightsValue.show();
+                  rightsValue.val('');
+                  rightsValue.attr('placeholder', 'Please enter other license');
+                } else {
+                  var rightsValue = jQuery("#Elements-47-0-text");
+                  rightsValue.hide();
+                  rightsValue.val(this.value);
+                }
+              });
+
+              var formatInput = jQuery("#Elements-42-0-text");
+              var formatSelect = '<select name="Elements[42][0][text]" id="Elements-42-0-text">';
+              formatSelect += '<option selected="selected" value=""></option>';
+              formatSelect += '<option value="color photographs">color photographs</option>';
+              formatSelect += '<option value="aerial photographs">aerial photographs</option>';
+              formatSelect += '<option value="astrophotographs">astrophotographs</option>';
+              formatSelect += '<option value="black-and-white photographs">black-and-white photographs</option>';
+              formatSelect += '<option value="boudoir photographs">boudoir photographs</option>';
+              formatSelect += '<option value="cabinet photographs">cabinet photographs</option>';
+              formatSelect += '<option value="composite photographs">composite photographs</option>';
+              formatSelect += '<option value="copy prints">copy prints</option>';
+              formatSelect += '<option value="digital images">digital images</option>';
+              formatSelect += '<option value="documentary photographs">documentary photographs</option>';
+              formatSelect += '<option value="dye diffusion transfer prints">dye diffusion transfer prints</option>';
+              formatSelect += '<option value="fashion photographs">fashion photographs</option>';
+              formatSelect += '<option value="forensic photographs">forensic photographs</option>';
+              formatSelect += '<option value="identification photographs">identification photographs</option>';
+              formatSelect += '<option value="news photographs">news photographs</option>';
+              formatSelect += '<option value="photograph albums">photograph albums</option>';
+              formatSelect += '<option value="photomurals">photomurals</option>';
+              formatSelect += '<option value="radiographs">radiographs</option>';
+              formatSelect += '<option value="wire photographs">wire photographs</option>';
+              formatSelect += '</select>';
+              formatInput.replaceWith(formatSelect);
+
+              var lang = jQuery("#element-44 div label");
+              lang.after("<div class='smTxt'>Language(s) of the original item.</div>");
+
+              var langInput = jQuery("#Elements-44-0-text");
+              var langRadio = '<input type="radio" value="English" id="dz-lang-ignore-English" name="dz-lang-ignore" class="Elements-44-0-text" />';
+              langRadio += '<label for="English">English</label>';
+              langRadio += '<input type="radio" value="Spanish" id="dz-lang-ignore-Spanish" name="dz-lang-ignore" class="Elements-44-0-text" />';
+              langRadio += '<label for="Spanish">Spanish</label>';
+              langRadio += '<input type="radio" value="Other" id="dz-lang-ignore-Other" name="dz-lang-ignore" class="Elements-44-0-text" />';
+              langRadio += '<label for="Other">Other</label>';
+              langRadio += '<input id="Elements-44-0-text" name="Elements[44][0][text]" style="display:none" placeholder="Please enter other language" value="" type="text" />';
+              langInput.replaceWith(langRadio);
+
+              jQuery(".Elements-44-0-text").change(function() {
+                if (this.checked && this.value === "Other") {
+                  var langValue = jQuery("#Elements-44-0-text");
+                  langValue.show();
+                  langValue.val('');
+                  langValue.attr('placeholder', 'Please enter other language');
+                } else {
+                  var langValue = jQuery("#Elements-44-0-text");
+                  langValue.hide();
+                  langValue.val(this.value);
+                }
+              });
+
+              var terms = jQuery("label[for='terms-agree']");
+
+              if (terms.find('.req').length == 0) {
+                terms.append("<span class='req'>&nbsp;&nbsp;*</span>");
+              }
+
+              jQuery('#contribution-public').attr('checked', true);
             });
           });
         }

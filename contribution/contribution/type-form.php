@@ -55,7 +55,7 @@
   <?php endif; ?>
 
   <?php if ($type->isFileRequired()): $required = true; ?>
-    <?php echo $this->formLabel('contributed_file', __('Upload photo(s) [required]')); ?>
+    <?php echo $this->formLabel('contributed_file', __('Upload photo(s)')); ?>
 
     <div id="omekaDZ" class="field-container dropzone">
       <div id="dzPhotos" class="dz-default dz-message">Drop photo(s) here or click to upload</div>
@@ -72,7 +72,7 @@
   ?>
 
   <?php if (!isset($required) && $type->isFileAllowed()): ?>
-    <?php echo $this->formLabel('contributed_file', __('Upload a photo [Optional]')); ?>
+    <?php echo $this->formLabel('contributed_file', __('Upload a photo')); ?>
 
     <div id="omekaDZ" class="field-container dropzone">
       <div id="dzStory" class="dz-default dz-message">Drop photo here or click to upload</div>

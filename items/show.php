@@ -91,8 +91,47 @@
       <?php endif; ?>
     <?php endif; ?>
 
-    <div class="single_share">
+    <div class="single_share" id="socialbookmarkingdiv">
+      <br/>
       <?php echo get_specific_plugin_hook_output('SocialBookmarking', 'public_items_show', array('view' => $this, 'item' => $item)); ?>
+    </div>
+  </div>
+  <div class="container container--medium">
+    <?php $creator = metadata('item', array('Dublin Core', 'Creator')); ?>
+    <?php if (isset($creator)): ?>
+      <div class="metadata" id="description-metadata"><span class="metadata-label">Creator:</span><?php echo $creator; ?></div>
+    <?php endif; ?>
+    <?php $source = metadata('item', array('Dublin Core', 'Source')); ?>
+    <?php if (isset($source)): ?>
+      <div class="metadata" id="description-metadata"><span class="metadata-label">Source:</span><?php echo $source; ?></div>
+    <?php endif; ?>
+    <?php $publisher = metadata('item', array('Dublin Core', 'Publisher')); ?>
+    <?php if (isset($publisher)): ?>
+      <div class="metadata" id="description-metadata"><span class="metadata-label">Publisher:</span><?php echo $publisher; ?></div>
+    <?php endif; ?>
+    <?php $rights = metadata('item', array('Dublin Core', 'Rights')); ?>
+    <?php if (isset($rights)): ?>
+      <div class="metadata" id="description-metadata"><span class="metadata-label">Rights:</span><?php echo $rights; ?></div>
+    <?php endif; ?>
+    <?php $format = metadata('item', array('Dublin Core', 'Format')); ?>
+    <?php if (isset($format)): ?>
+      <div class="metadata" id="description-metadata"><span class="metadata-label">Format:</span><?php echo $format; ?></div>
+    <?php endif; ?>
+    <?php $dimensions = metadata('item', array('Item Type Metadata', 'Physical Dimensions')); ?>
+    <?php if (isset($dimensions)): ?>
+      <div class="metadata" id="description-metadata"><span class="metadata-label">Dimensions:</span><?php echo $dimensions; ?></div>
+    <?php endif; ?>
+    <?php $language = metadata('item', array('Dublin Core', 'Language')); ?>
+    <?php if (isset($language)): ?>
+      <div class="metadata" id="description-metadata"><span class="metadata-label">Language:</span><?php echo $language; ?></div>
+    <?php endif; ?>
+    <?php $type = metadata('item', array('Dublin Core', 'Type')); ?>
+    <?php if (isset($type)): ?>
+      <div class="metadata" id="description-metadata"><span class="metadata-label">Type:</span><?php echo $type; ?></div>
+    <?php endif; ?>
+
+    <div>
+      <?php echo get_specific_plugin_hook_output('Geolocation', 'public_items_show', array('view' => $this, 'item' => get_current_record('item'))); ?>
     </div>
   </div>
 

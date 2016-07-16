@@ -51,8 +51,9 @@ enableContributionAjaxForm(<?php echo js_escape(url($contributionPath.'/type-for
     <?php else: ?>
       <form id="contribute" method="post" action="" enctype="multipart/form-data">
         <fieldset id="contribution-item-metadata">
+          <div style="text-align:right;" class="req">* Required</div>
           <div class="field">
-            <label for="contribution-type"><?php echo __("What do you want to contribute?"); ?></label>
+            <label for="contribution-type"><?php echo __("What do you want to contribute?"); ?><span class="req">&nbsp;&nbsp;*</span></label>
             <?php $options = get_table_options('ContributionType' ); ?>
             <?php $typeId = isset($type) ? $type->id : '' ; ?>
             <?php echo $this->formSelect( 'contribution_type', $typeId, array('multiple' => false, 'id' => 'contribution-type') , $options); ?>
@@ -82,7 +83,7 @@ enableContributionAjaxForm(<?php echo js_escape(url($contributionPath.'/type-for
           <div class="field">
             <?php $agree = isset( $_POST['terms-agree']) ?  $_POST['terms-agree'] : 0 ?>
             <?php echo $this->formCheckbox('terms-agree', $agree, null, array('1', '0')); ?>
-            <?php echo $this->formLabel('terms-agree', __('I agree to the Terms and Conditions [required]')); ?>
+            <?php echo $this->formLabel('terms-agree', __('I agree to the Terms and Conditions')); ?>
           </div>
           <?php echo $this->formSubmit('form-submit', __('Contribute'), array('class' => 'submitinput')); ?>
         </fieldset>

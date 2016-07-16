@@ -23,6 +23,7 @@ Omeka.Poster = {};
 
           if (typeof(Storage) !== 'undefined') {
             localStorage.openExplore = "true";
+            localStorage.shortcutBrowse = "true";
           }
 
           window.location = "/items/browse";

@@ -3486,7 +3486,7 @@ input[type="submit"], .hero a.join-today, .comment .comment-reply {
       -webkit-border-radius: 3px 3px;
       border-radius: 3px / 3px;
       background-color: #fff;
-      border: 1px solid rgba(0, 0, 0, 0.1);
+      /* border: 1px solid rgba(0, 0, 0, 0.1); */
       text-align: left;
       position: absolute;
       top: 0;
@@ -4692,6 +4692,14 @@ div#item_view article {
   right: 15px;
 }
 
+.bx-wrapper .bx-prev {
+  background: url('../images/controls.png') no-repeat 0 -32px;
+}
+
+.bx-wrapper .bx-next {
+  background: url('../images/controls.png') no-repeat -43px -32px;
+}
+
 #search-nav-right {
   float: right;
 }
@@ -4940,10 +4948,10 @@ div#item_view article {
 
 #add-to-album-button {
   background-color:white;
-  border-radius:25px;
-  padding:4px;
+  border-radius:60px;
+  padding:6px 8px 4px 8px;
   float:right;
-  margin-top:-28px;
+  margin-top:-60px;
   position:relative;
 }
 
@@ -5146,4 +5154,27 @@ section.contribute div.container {
 
 #omekaDZ.dz-max-files-reached div.dz-preview a.dz-edit-details {
   display: none;
+}
+
+.thumbnail .has-image .bx-caption, .bx-wrapper .bx-caption {
+  background-color: white;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+.bx-caption, .bx-caption h3 {
+  color: #00a6e4;
+}
+
+.req {
+  font-size: smaller;
+  color: red;
+}
+
+label {
+  margin-bottom: 0px;
+}
+
+.smTxt {
+  color: #8f8f8f;
 }
