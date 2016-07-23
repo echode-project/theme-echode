@@ -50,11 +50,14 @@ function initDropzone(maxFilesVar) {
       var descriptionFieldVal = descriptionField.val();
       var formatField = contributionForm.find('#Elements-42-0-text');
       var formatFieldVal = formatField.val();
+      var typeField = contributionForm.find('#Elements-51-0-text');
+      var typeFieldVal = typeField.val();
 
       var otherDate = contributionForm.find('#dz-date_' + hashedBaseId);
       var otherDimensions = contributionForm.find('#dz-dimensions_' + hashedBaseId);
       var moreDescription = contributionForm.find('#dz-description_' + hashedBaseId);
       var otherFormat = contributionForm.find('#dz-format_' + hashedBaseId);
+      var otherType = contributionForm.find('#dz-type_' + hashedBaseId);
 
       if (otherDate.length > 0) {
         dateField.val(otherDate.val());
@@ -73,6 +76,9 @@ function initDropzone(maxFilesVar) {
       }
       if (otherFormat.length > 0) {
         formatField.val(otherFormat.val());
+      }
+      if (otherType.length > 0) {
+        typeField.val(otherType.val());
       }
 
       var values = contributionForm.serialize().split('&');
@@ -95,6 +101,7 @@ function initDropzone(maxFilesVar) {
       dimensionsField.val(dimensionsFieldVal);
       descriptionField.val(descriptionFieldVal);
       formatField.val(formatFieldVal);
+      typeField.val(typeFieldVal);
     },
     processing: function() {
       this.options.autoProcessQueue = true;
@@ -135,18 +142,20 @@ function initDropzone(maxFilesVar) {
 
       var simpleHash = window.btoa(encodeURIComponent(escape(file.name)));
       var hashedBaseId = simpleHash.replace(new RegExp('[\+=\/]', 'g'), '');
-      var popup = "", dateVal = "", dimensionsVal = "", descriptionVal = "", formatVal = "";
+      var popup = "", dateVal = "", dimensionsVal = "", descriptionVal = "", formatVal = "", typeVal = "";
       var contributionForm = jQuery('#contribute');
 
       var date = contributionForm.find('#dz-date_' + hashedBaseId);
       var dimensions = contributionForm.find('#dz-dimensions_' + hashedBaseId);
       var description = contributionForm.find('#dz-description_' + hashedBaseId);
       var format = contributionForm.find('#dz-format_' + hashedBaseId);
+      var type = contributionForm.find('#dz-type_' + hashedBaseId);
 
       if (date.length > 0) dateVal = date.val();
       if (dimensions.length > 0) dimensionsVal = dimensions.val();
       if (description.length > 0) descriptionVal = description.val();
       if (format.length > 0) formatVal = format.val();
+      if (type.length > 0) typeVal = type.val();
 
       popup += '<div id="' + hashedBaseId  + '_details_popup" class="details_popup">';
       popup += '<span id="popup_title">Image Details</span>';
@@ -179,6 +188,25 @@ function initDropzone(maxFilesVar) {
       popup += ('<option ' + (formatVal == 'wire photographs' ? 'selected="selected"' : '') + ' value="wire photographs">wire photographs</option>');
       popup += '</select></dd>';
 
+      popup += '<dt>Type:</dt><dd><div class="smTxt">The nature or genre of the resource</div><select name="dz-type" id="dz-type">';
+      popup += ('<option ' + (typeVal == '' ? 'selected="selected"' : '') + ' value=""></option>');
+      popup += ('<option ' + (typeVal == 'Still Image' ? 'selected="selected"' : '') + ' value="Still Image">Still Image</option>');
+      popup += ('<option ' + (typeVal == 'Letter' ? 'selected="selected"' : '') + ' value="Letter">Letter</option>');
+      popup += ('<option ' + (typeVal == 'Literature' ? 'selected="selected"' : '') + ' value="Literature">Literature</option>');
+      popup += ('<option ' + (typeVal == 'Poem' ? 'selected="selected"' : '') + ' value="Poem">Poem</option>');
+      popup += ('<option ' + (typeVal == 'Program' ? 'selected="selected"' : '') + ' value="Program">Program</option>');
+      popup += ('<option ' + (typeVal == 'Email' ? 'selected="selected"' : '') + ' value="Email">Email</option>');
+      popup += ('<option ' + (typeVal == 'Event' ? 'selected="selected"' : '') + ' value="Event">Event</option>');
+      popup += ('<option ' + (typeVal == 'Lesson' ? 'selected="selected"' : '') + ' value="Lesson">Lesson</option>');
+      popup += ('<option ' + (typeVal == 'Moving Image' ? 'selected="selected"' : '') + ' value="Moving Image">Moving Image</option>');
+      popup += ('<option ' + (typeVal == 'Website' ? 'selected="selected"' : '') + ' value="Website">Website</option>');
+      popup += ('<option ' + (typeVal == 'Plan' ? 'selected="selected"' : '') + ' value="Plan">Plan</option>');
+      popup += ('<option ' + (typeVal == 'Hyperlink' ? 'selected="selected"' : '') + ' value="Hyperlink">Hyperlink</option>');
+      popup += ('<option ' + (typeVal == 'Interactive Resource' ? 'selected="selected"' : '') + ' value="Interactive Resource">Interactive Resource</option>');
+      popup += ('<option ' + (typeVal == 'Sound' ? 'selected="selected"' : '') + ' value="Sound">Sound</option>');
+      popup += ('<option ' + (typeVal == 'Oral History' ? 'selected="selected"' : '') + ' value="Oral History">Oral History</option>');
+      popup += '</select></dd>';
+
       popup += '</dl></form></div>';
       popup += '</div>';
 
@@ -193,12 +221,14 @@ function initDropzone(maxFilesVar) {
         var formDimensions = realForm.find('#dz-dimensions_' + hashedBaseId);
         var formDescription = realForm.find('#dz-description_' + hashedBaseId);
         var formFormat = realForm.find('#dz-format_' + hashedBaseId);
+        var formType = realForm.find('#dz-type_' + hashedBaseId);
 
         var thisForm = jQuery('#form_' + hashedBaseId);
         var dateValue = thisForm.find('#dz-date').val();
         var dimensionsValue = thisForm.find('#dz-dimensions').val();
         var descriptionValue = thisForm.find('#dz-description').val();
         var formatValue = thisForm.find('#dz-format').val();
+        var typeValue = thisForm.find('#dz-type').val();
 
         if (formDate.length > 0) {
           formDate.val(dateValue);
@@ -223,6 +253,12 @@ function initDropzone(maxFilesVar) {
         } else if (formatValue != undefined && formatValue.length > 1) {
           var formatId = 'dz-format_' + hashedBaseId;
           jQuery('#contribute').append('<input type="hidden" id="' + formatId + '" name="' + formatId + '" value="' + formatValue + '">');
+        }
+        if (formType.length > 0) {
+          formType.val(typeValue);
+        } else if (typeValue != undefined && typeValue.length > 1) {
+          var typeId = 'dz-type_' + hashedBaseId;
+          jQuery('#contribute').append('<input type="hidden" id="' + typeId + '" name="' + typeId + '" value="' + typeValue + '">');
         }
       });
 
@@ -304,11 +340,13 @@ function enableContributionAjaxForm(url) {
                 format.append("<span class='req'>&nbsp;&nbsp;*</span>");
                 format.after("<div class='smTxt'>The file format or physical medium.</div>");
 
+                var type = jQuery("#element-51 div label");
+                type.append("<span class='req'>&nbsp;&nbsp;*</span>");
+                type.after("<div class='smTxt'>The nature or genre of the resource.</div>");
+
                 var dimensions = jQuery("#element-10 div label");
                 dimensions.append("<span class='req'>&nbsp;&nbsp;*</span>");
                 dimensions.after("<div class='smTxt'>Size of the item. (i.e. 4 x 5 in, 8 x 10 in, etc.)</div>");
-
-                jQuery('#contribute').append('<input type="hidden" name="Elements[51][0][text]" id="Elements-51-0-text" value="Still Image">');
               }
 
               var title = jQuery("#element-50 div label");
@@ -413,6 +451,27 @@ function enableContributionAjaxForm(url) {
               formatSelect += '<option value="wire photographs">wire photographs</option>';
               formatSelect += '</select>';
               formatInput.replaceWith(formatSelect);
+
+              var typeInput = jQuery("#Elements-51-0-text");
+              var typeSelect = '<select name="Elements[51][0][text]" id="Elements-51-0-text">';
+              typeSelect += '<option selected="selected" value=""></option>';
+              typeSelect += '<option value="Still Image">Still Image</option>';
+              typeSelect += '<option value="Oral History">Oral History</option>';
+              typeSelect += '<option value="Letter">Letter</option>';
+              typeSelect += '<option value="Literature">Literature</option>';
+              typeSelect += '<option value="Poem">Poem</option>';
+              typeSelect += '<option value="Program">Program</option>';
+              typeSelect += '<option value="Email">Email</option>';
+              typeSelect += '<option value="Event">Event</option>';
+              typeSelect += '<option value="Lesson">Lesson</option>';
+              typeSelect += '<option value="Moving Image">Moving Image</option>';
+              typeSelect += '<option value="Sound">Sound</option>';
+              typeSelect += '<option value="Website">Website</option>';
+              typeSelect += '<option value="Plan">Plan</option>';
+              typeSelect += '<option value="Hyperlink">Hyperlink</option>';
+              typeSelect += '<option value="Interactive Resource">Interactive Resource</option>';
+              typeSelect += '</select>';
+              typeInput.replaceWith(typeSelect);
 
               var lang = jQuery("#element-44 div label");
               lang.after("<div class='smTxt'>Language(s) of the original item.</div>");

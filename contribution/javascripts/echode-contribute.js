@@ -51,7 +51,7 @@ jQuery(document).ready(function() {
         jQuery('html, body').animate({ scrollTop: jQuery('#omekaDZ').offset().top - 80 });
 
         dz.processQueue();
-      } else if (jQuery('#Elements-51-0-text').val() == "Still Image") {
+      } else if (jQuery('#Elements-51-0-text').val() != "Document") {
         e.preventDefault();
 
         if (jQuery('#retry').length == 0) {
