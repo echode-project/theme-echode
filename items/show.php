@@ -131,7 +131,7 @@
     <?php endif; ?>
 
     <div>
-      <?php echo get_specific_plugin_hook_output('Geolocation', 'public_items_show', array('view' => $this, 'item' => get_current_record('item'))); ?>
+      <?php echo get_specific_plugin_hook_output('Geolocation', 'public_items_show', array('view' => $this, 'item' => $item)); ?>
     </div>
   </div>
 
